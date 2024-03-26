@@ -13,3 +13,15 @@ router.get("/", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+router.post("/", async (req, res) => {
+  try {
+    const { name, age, grade } = req.body;
+    const student = new Student({ name, studentId });
+    await student.save();
+    res.status(201).json(student);
+  } catch (err) {
+    console.error("Error creating student:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
