@@ -14,7 +14,7 @@ router.post("/", async (req, res) => {
     if (!student) {
       return res.status(404).json({ error: "Student not found" });
     }
-    const newExam = new Exam({ student, grade });
+    const newExam = new Exam({ student, score });
     await newExam.save();
     res.status(201).json(newExam);
   } catch (error) {
