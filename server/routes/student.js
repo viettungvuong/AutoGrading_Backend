@@ -9,15 +9,18 @@ router.get("/", async (req, res) => {
     const students = await Student.find({});
     res.json(students);
   } catch (err) {
-    console.error("Error fetching students:", err);
     res.status(500).json({ error: "Internal server error" });
   }
 });
 
 router.post("/", async (req, res) => {
   try {
-    const { name, age, grade } = req.body;
-    const student = new Student({ name, studentId });
+    const { name, studentId } = req.body;
+    const student = new Student({
+      _id: ObjectId(studentId),
+      name: name,
+      studentId: studentId,
+    });
     await student.save();
     res.status(201).json(student);
   } catch (err) {

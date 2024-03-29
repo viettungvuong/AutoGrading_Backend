@@ -1,10 +1,7 @@
 const ExamSession = require("../models/examSession");
 const getAllSessionsOfUser = (userEmail) => {
-  ExamSession.find({})
-    .populate({
-      path: "user",
-      match: { email: email },
-    })
+  ExamSession.find({ user: userEmail })
+    .populate("user")
     .exec((err, sessions) => {
       if (err) {
         return null;
