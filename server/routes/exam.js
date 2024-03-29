@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 
 const Exam = require("../models/exam");
-const express = require("express");
 const ExamController = require("../controllers/exam");
 
 // khong up le Exam len duoc ma Exam luon phu thuoc vao ExamSession
