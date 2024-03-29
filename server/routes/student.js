@@ -14,6 +14,7 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+  // them student
   try {
     const { name, studentId } = req.body;
     const student = new Student({

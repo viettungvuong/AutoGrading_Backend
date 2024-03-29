@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const examSessionSchema = new mongoose.Schema({
   exams: [{ type: mongoose.Schema.Types.ObjectId, ref: "Exam" }],
   user: {
