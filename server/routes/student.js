@@ -21,7 +21,6 @@ router.post("/", async (req, res) => {
     await student.save();
     res.status(201).json(student);
   } catch (err) {
-    console.error("Error creating student:", err);
     res.status(500).json({ error: "Internal server error" });
   }
 });
