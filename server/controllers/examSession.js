@@ -12,3 +12,7 @@ const getAllSessionsOfUser = (userEmail) => {
       return sessions;
     });
 };
+
+module.exports = {
+  getAllSessionsOfUser,
+};

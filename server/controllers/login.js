@@ -1,8 +1,8 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
-const signIn = async (username, inputPassword) => {
+const signIn = async (email, inputPassword) => {
   try {
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ email });
     if (!user) {
       return false; // User not found
     }
@@ -15,9 +15,9 @@ const signIn = async (username, inputPassword) => {
   }
 };
 
-const register = (username, password) => {
+const register = (email, password) => {
   const newUser = new User({
-    username,
+    email,
     password,
   });
 
@@ -28,4 +28,19 @@ const register = (username, password) => {
       return true;
     }
   });
+};
+
+const emailExists = async (email) => {
+  try {
+    const user = await User.findOne({ email });
+    return !!user;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+};
+module.exports = {
+  signIn,
+  register,
+  emailExists,
 };

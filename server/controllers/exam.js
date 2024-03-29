@@ -1,7 +1,7 @@
 const Student = require("../models/student");
 const Exam = require("../models/exam");
 
-const getAllExamsOfStudent = (studentId) => {
+const getAllExamsOfStudent = async (studentId) => {
   Exam.find({})
     .populate({
       path: "student",
@@ -13,4 +13,8 @@ const getAllExamsOfStudent = (studentId) => {
       }
       return exams;
     });
+};
+
+module.exports = {
+  getAllExamsOfStudent,
 };
