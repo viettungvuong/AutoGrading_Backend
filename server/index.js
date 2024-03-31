@@ -6,6 +6,8 @@ const mongoose = require("mongoose");
 
 const ExamRoute = require("./routes/exam");
 const StudentRoute = require("./routes/student");
+const ExamSessionRoute = require("./routes/examSession");
+const LoginRoute = require("./routes/login");
 
 // ket noi toi mongodb
 mongoose.connect(process.env.MONGO_DB_URL, {
@@ -17,6 +19,8 @@ mongoose.connection.on("connected", () => {
   console.log("Mongoose connected to MongoDB");
 });
 
+app.route("/login", LoginRoute);
+app.route("/session", ExamSessionRoute);
 app.route("/exam", ExamRoute);
 app.route("/student", StudentRoute);
 
