@@ -13,6 +13,7 @@ router.get("/:email", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+  // exams la mang chua cac entry o dang {studentId, score}
   try {
     const { exams, userId } = req.body;
     if (!exams || !userId) {
