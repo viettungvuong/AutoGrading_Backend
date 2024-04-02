@@ -19,10 +19,10 @@ mongoose.connection.on("connected", () => {
   console.log("Mongoose connected to MongoDB");
 });
 
-app.route("/login", LoginRoute);
-app.route("/session", ExamSessionRoute);
-app.route("/exam", ExamRoute);
-app.route("/student", StudentRoute);
+app.use("/login", LoginRoute);
+app.use("/session", ExamSessionRoute);
+app.use("/exam", ExamRoute);
+app.use("/student", StudentRoute);
 
 app.listen(3001, () => {
   console.log("server is running on port 3001");
