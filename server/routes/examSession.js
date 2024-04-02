@@ -48,8 +48,7 @@ router.post("/", async (req, res) => {
 
     res.status(201).json(savedExamSession);
   } catch (err) {
-    console.error("Error:", err);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: err.message });
   }
 });
 

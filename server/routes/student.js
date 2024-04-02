@@ -40,14 +40,14 @@ router.post("/", async (req, res) => {
   try {
     const { name, studentId } = req.body;
     const student = new Student({
-      _id: ObjectId(studentId),
+      _id: studentId,
       name: name,
       studentId: studentId,
     });
     await student.save();
     res.status(201).json({ students: student });
   } catch (err) {
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: err.message });
   }
 });
 

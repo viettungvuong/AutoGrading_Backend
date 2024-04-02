@@ -3,6 +3,8 @@ const app = express();
 const dotenv = require("dotenv");
 dotenv.config();
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
 const ExamRoute = require("./routes/exam");
 const StudentRoute = require("./routes/student");
@@ -18,6 +20,8 @@ mongoose.connect(process.env.MONGO_DB_URL, {
 mongoose.connection.on("connected", () => {
   console.log("Mongoose connected to MongoDB");
 });
+
+app.use(bodyParser.json()); //middleware to interpret json
 
 app.use("/login", LoginRoute);
 app.use("/session", ExamSessionRoute);
