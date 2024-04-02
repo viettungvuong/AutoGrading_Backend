@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 
 const ExamSession = require("../models/examSession");
-const express = require("express");
 const ExamSessionController = require("../controllers/examSession");
 
 router.get("/:email", async (req, res) => {
