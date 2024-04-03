@@ -28,6 +28,7 @@ router.post("/signup", async (req, res) => {
   }
 
   const register = await LoginController.register(email, inputPassword);
+  console.log(register);
 
   if (register == true) {
     return res.status(200).send("Registered successfully");

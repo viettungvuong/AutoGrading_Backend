@@ -17,8 +17,9 @@ const signIn = async (email, inputPassword) => {
 
 const register = async (email, password) => {
   const newUser = new User({
-    email,
-    password,
+    _id: email,
+    email: email,
+    password: password,
   });
 
   try {
