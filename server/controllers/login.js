@@ -25,6 +25,7 @@ const register = async (email, password) => {
     await newUser.save();
     return true;
   } catch (err) {
+    console.log(err.message);
     return false;
   }
 };
