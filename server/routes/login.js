@@ -22,20 +22,22 @@ router.post("/signup", async (req, res) => {
   const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; //regex check email
   const validMail = emailRegex.test(email);
   if (!validMail) {
-    return res.status(400).json({ error: "Invalid email format" });
+    res.status(400).json({ error: "Invalid email format" });
+    return;
   }
   const emailExists = await LoginController.emailExists(email);
   if (emailExists) {
-    return res.status(400).json({ error: "User with this email exists" });
+    res.status(400).json({ error: "User with this email exists" });
+    return;
   }
 
   const register = await LoginController.register(email, inputPassword);
   console.log(register);
 
   if (register == true) {
-    return res.status(200).json("Registered successfully");
+    res.status(200).json("Registered successfully");
   } else {
-    return res.status(400).json({ error: "Error when registering" });
+    res.status(400).json({ error: "Error when registering" });
   }
 });
 
