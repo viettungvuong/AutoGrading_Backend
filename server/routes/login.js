@@ -35,7 +35,7 @@ router.post("/signup", async (req, res) => {
   console.log(register);
 
   if (register == true) {
-    res.status(200).json("Registered successfully");
+    res.status(200).send("Registered successfully");
   } else {
     res.status(400).json({ error: "Error when registering" });
   }
