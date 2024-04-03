@@ -9,7 +9,7 @@ router.post("/signin", async (req, res) => {
   if (login == true) {
     return res.status(200).send("Sign in successfully");
   } else {
-    return res.status(400).send("Error when signing in");
+    return res.status(400).json({ error: "Error when signing in" });
   }
 });
 
