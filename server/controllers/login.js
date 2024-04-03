@@ -15,19 +15,18 @@ const signIn = async (email, inputPassword) => {
   }
 };
 
-const register = (email, password) => {
+const register = async (email, password) => {
   const newUser = new User({
     email,
     password,
   });
 
-  newUser.save((err) => {
-    if (err) {
-      return false;
-    } else {
-      return true;
-    }
-  });
+  try {
+    await newUser.save();
+    return true;
+  } catch (err) {
+    return false;
+  }
 };
 
 const emailExists = async (email) => {
