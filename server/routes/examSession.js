@@ -15,11 +15,11 @@ router.post("/", async (req, res) => {
   // exams la mang chua cac entry o dang {studentId, score}
   try {
     const { exams, userId } = req.body;
-    if (!exams || !userId) {
-      return res
-        .status(400)
-        .json({ error: "Both examIds and userId are required." });
-    }
+    // if (!exams || !userId) {
+    //   return res
+    //     .status(400)
+    //     .json({ error: "Both exams and userId are required." });
+    // }
     let savedExams = [];
     for (var i = 0; i < exams.length; i++) {
       var entry = exams[i]; // bai thi
@@ -27,7 +27,8 @@ router.post("/", async (req, res) => {
       const { studentId, score } = entry;
       const student = await Exam.findOne({ _id: studentId });
       if (!student) {
-        return res.status(404).json({ error: "Student not found" });
+        print("Student not found");
+        return res.status(401).json({ error: "Student not found" });
       }
       const newExam = new Exam({ student, score });
       await newExam.save();
