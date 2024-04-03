@@ -17,6 +17,8 @@ router.post("/signup", async (req, res) => {
   // dang ky
   const email = req.body.email;
   const inputPassword = req.body.password;
+  console.log(email);
+  console.log(inputPassword);
   const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; //regex check email
   const validMail = emailRegex.test(email);
   if (!validMail) {
@@ -31,9 +33,9 @@ router.post("/signup", async (req, res) => {
   console.log(register);
 
   if (register == true) {
-    return res.status(200).send("Registered successfully");
+    return res.status(200).json("Registered successfully");
   } else {
-    return res.status(400).send("Error when registering");
+    return res.status(400).json({ error: "Error when registering" });
   }
 });
 
