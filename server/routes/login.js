@@ -17,7 +17,7 @@ router.post("/signup", async (req, res) => {
   // dang ky
   const email = req.body.email;
   const inputPassword = req.body.password;
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; //regex check email
+  const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; //regex check email
   const validMail = emailRegex.test(email);
   if (!validMail) {
     return res.status(400).json({ error: "Invalid email format" });
