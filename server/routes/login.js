@@ -7,7 +7,7 @@ router.post("/signin", async (req, res) => {
   const login = await LoginController.signIn(req.body.email, req.body.password);
 
   if (login == true) {
-    return res.status(201).send("Sign in successfully");
+    return res.status(200).send("Sign in successfully");
   } else {
     return res.status(400).send("Error when signing in");
   }
@@ -29,7 +29,7 @@ router.post("/signup", async (req, res) => {
   const register = await LoginController.register(email, inputPassword);
 
   if (register == true) {
-    return res.status(201).send("Registered successfully");
+    return res.status(200).send("Registered successfully");
   } else {
     return res.status(400).send("Error when registering");
   }
