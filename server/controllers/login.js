@@ -33,7 +33,7 @@ const register = (email, password) => {
 const emailExists = async (email) => {
   try {
     const user = await User.findOne({ email });
-    console.log(user);
+    console.log(user == null);
     if (user == null) {
       return false;
     } else {
