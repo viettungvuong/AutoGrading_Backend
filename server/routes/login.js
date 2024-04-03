@@ -22,7 +22,8 @@ router.post("/signup", async (req, res) => {
   if (!validMail) {
     return res.status(400).json({ error: "Invalid email format" });
   }
-  if (LoginController.emailExists(email)) {
+  const emailExists = await LoginController.emailExists(email);
+  if (emailExists) {
     return res.status(400).json({ error: "User with this email exists" });
   }
 
