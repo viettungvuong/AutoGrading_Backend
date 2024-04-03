@@ -3,6 +3,7 @@ const router = app.Router();
 const LoginController = require("../controllers/login");
 
 router.post("/signin", async (req, res) => {
+  //dang nhap
   const login = await LoginController.signIn(req.body.email, req.body.password);
 
   if (login == true) {
@@ -12,7 +13,7 @@ router.post("/signin", async (req, res) => {
   }
 });
 
-router.post("/register", async (req, res) => {
+router.post("/signup", async (req, res) => {
   // dang ky
   const email = req.body.email;
   const inputPassword = req.body.password;
