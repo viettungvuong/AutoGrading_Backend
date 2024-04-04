@@ -2,14 +2,15 @@ const Student = require("../models/student");
 const Exam = require("../models/exam");
 
 const getAllExamsOfStudent = async (studentId) => {
-  Exam.find({ student: studentId })
-    .populate("student")
-    .exec((err, exams) => {
-      if (err) {
-        return null;
-      }
-      return exams;
-    });
+  try {
+    const exams = await Exam.find({ student: studentId })
+      .populate("student")
+      .exec();
+    return exams;
+  } catch (error) {
+    console.error("Error finding exams:", error);
+    return null;
+  }
 };
 
 module.exports = {
