@@ -47,8 +47,9 @@ router.post("/", async (req, res) => {
 
     const savedExamSession = await examSession.save();
 
-    res.status(201).json(savedExamSession);
+    res.status(200).json(savedExamSession);
   } catch (err) {
+    console.log(err.message);
     res.status(500).json({ error: err.message });
   }
 });
