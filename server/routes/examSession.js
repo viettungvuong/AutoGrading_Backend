@@ -11,7 +11,7 @@ router.get("/:email", async (req, res) => {
   const sessions = await ExamSessionController.getAllSessionsOfUser(
     req.params.email
   );
-  return res.json(sessions);
+  return res.json(JSON.stringify(sessions)); // tra dang json
 });
 
 router.post("/", async (req, res) => {
@@ -102,7 +102,7 @@ router.put("/", async (req, res) => {
           return res.status(500).json({ error: err.message });
         }
 
-        res.status(200).json({ _id: savedExamSession._id });
+        res.status(200).json({ _id: id });
       });
     });
   } catch (err) {
