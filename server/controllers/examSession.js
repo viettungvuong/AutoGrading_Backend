@@ -1,15 +1,26 @@
 const ExamSession = require("../models/examSession");
+const mongoose = require("mongoose");
 
 const getAllSessionsOfUser = async (userEmail) => {
-  ExamSession.find({ user: userEmail })
-    .populate("user")
-    .exec((err, sessions) => {
-      if (err) {
-        return null;
-      }
-      console.log(sessions);
-      return sessions;
-    });
+  try {
+    const examSessions = await ExamSession.aggregate([
+      {
+        $lookup: {
+          from: "users", // The name of the User collection
+          localField: "user", // The field in ExamSession collection
+          foreignField: "_id", // The field in User collection
+          as: "user", // The alias for the joined documents
+        },
+      },
+      { $unwind: "$user" }, // Unwind the array created by the $lookup stage
+      { $match: { "user.email": userEmail } }, // match email
+    ]);
+    console.log(examSessions);
+    return examSessions;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 };
 
 module.exports = {

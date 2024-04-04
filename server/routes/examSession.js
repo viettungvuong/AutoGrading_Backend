@@ -8,10 +8,11 @@ const Exam = require("../models/exam");
 const Student = require("../models/student");
 
 router.get("/:email", async (req, res) => {
+  console.log(req.params.email);
   const sessions = await ExamSessionController.getAllSessionsOfUser(
     req.params.email
   );
-  return res.json(JSON.stringify(sessions)); // tra dang json
+  return res.json(sessions); // tra dang json
 });
 
 router.post("/", async (req, res) => {
