@@ -40,7 +40,6 @@ router.post("/", async (req, res) => {
   try {
     const { name, studentId } = req.body;
     const student = new Student({
-      _id: studentId,
       name: name,
       studentId: studentId,
     });

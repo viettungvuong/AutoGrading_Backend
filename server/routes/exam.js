@@ -23,8 +23,10 @@ const ExamController = require("../controllers/exam");
 
 router.get("/:studentId", async (req, res) => {
   try {
-    await ExamController.getAllExamsOfStudent(req.params.studentId);
-    res.status(201).json(newExam);
+    const exams = await ExamController.getAllExamsOfStudent(
+      req.params.studentId
+    );
+    res.status(200).json(exams);
   } catch (error) {
     res.status(500).json({ error: error });
   }
@@ -33,7 +35,7 @@ router.get("/:studentId", async (req, res) => {
 router.get("/byId/:id", async (req, res) => {
   try {
     const exam = await Exam.findById(req.params.id);
-    res.status(201).json(exam);
+    res.status(200).json(exam);
   } catch (error) {
     res.status(500).json({ error: error });
   }

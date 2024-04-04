@@ -29,7 +29,7 @@ router.post("/", async (req, res) => {
       var entry = exams[i]; // bai thi
 
       const { studentId, score } = entry;
-      const student = await Student.findOne({ _id: studentId }); // tim student
+      const student = await Student.findOne({ studentId: studentId }); // tim student
       if (!student) {
         print("Student not found");
         return res.status(401).json({ error: "Student not found" });
@@ -39,7 +39,7 @@ router.post("/", async (req, res) => {
       savedExams.push(newExam); //them _id de refer trong examSession
     }
 
-    const user = await User.findOne({ _id: userId }); // tim user cho examSession
+    const user = await User.findOne({ email: userId }); // tim user cho examSession
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
@@ -72,7 +72,7 @@ router.put("/", async (req, res) => {
       var entry = exams[i]; // bai thi
 
       const { studentId, score } = entry;
-      const student = await Student.findOne({ _id: studentId }); // tim student
+      const student = await Student.findOne({ studentiD: studentId }); // tim student
       if (!student) {
         print("Student not found");
         return res.status(401).json({ error: "Student not found" });
@@ -82,7 +82,7 @@ router.put("/", async (req, res) => {
       savedExams.push(newExam); //them _id de refer trong examSession
     }
 
-    const user = await User.findOne({ _id: userId }); // tim user cho examSession
+    const user = await User.findOne({ email: userId }); // tim user cho examSession
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
