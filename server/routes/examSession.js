@@ -27,7 +27,7 @@ router.post("/", async (req, res) => {
       var entry = exams[i]; // bai thi
 
       const { studentId, score } = entry;
-      const student = await Exam.findOne({ _id: studentId });
+      const student = await Student.findOne({ _id: studentId }); // tim student
       if (!student) {
         print("Student not found");
         return res.status(401).json({ error: "Student not found" });
