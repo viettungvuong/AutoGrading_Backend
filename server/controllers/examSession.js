@@ -7,7 +7,7 @@ const getAllSessionsOfUser = async (userEmail) => {
       if (err) {
         return null;
       }
-      return session;
+      return sessions;
     });
 };
 
