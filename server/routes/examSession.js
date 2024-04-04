@@ -4,6 +4,7 @@ const router = express.Router();
 const ExamSession = require("../models/examSession");
 const ExamSessionController = require("../controllers/examSession");
 const User = require("../models/user");
+const Exam = require("../models/exam");
 
 router.get("/:email", async (req, res) => {
   const sessions = await ExamSessionController.getAllSessionsOfUser(
