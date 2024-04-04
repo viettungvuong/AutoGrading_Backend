@@ -34,7 +34,7 @@ router.post("/", async (req, res) => {
         return res.status(401).json({ error: "Student not found" });
       }
       const newExam = new Exam({ student, score });
-      await newExam.save();
+      await newExam.save(); // luu nhung exam moi
       savedExams.push(newExam); //them _id de refer trong examSession
     }
 
@@ -50,7 +50,61 @@ router.post("/", async (req, res) => {
 
     const savedExamSession = await examSession.save();
 
-    res.status(200).json(savedExamSession);
+    res.status(200).json({ _id: savedExamSession._id });
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.put("/", async (req, res) => {
+  // exams la mang chua cac entry o dang {studentId, score}
+  try {
+    const { id, exams, userId } = req.body;
+    if (!id || !exams || !userId) {
+      return res
+        .status(400)
+        .json({ error: "Id, exams, and userId are required." });
+    }
+    let savedExams = [];
+    for (var i = 0; i < exams.length; i++) {
+      var entry = exams[i]; // bai thi
+
+      const { studentId, score } = entry;
+      const student = await Student.findOne({ _id: studentId }); // tim student
+      if (!student) {
+        print("Student not found");
+        return res.status(401).json({ error: "Student not found" });
+      }
+      const newExam = new Exam({ student, score });
+      await newExam.save(); // luu nhung exam moi
+      savedExams.push(newExam); //them _id de refer trong examSession
+    }
+
+    const user = await User.findOne({ _id: userId }); // tim user cho examSession
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    ExamSession.findById(id, (err, document) => {
+      if (err) {
+        return res.status(500).json({ error: err.message });
+      }
+
+      if (!document) {
+        return res.status(404).json({ error: "Session not found" });
+      }
+
+      document.exams = savedExams;
+
+      document.save((err, updatedDocument) => {
+        if (err) {
+          return res.status(500).json({ error: err.message });
+        }
+
+        res.status(200).json({ _id: savedExamSession._id });
+      });
+    });
   } catch (err) {
     console.log(err.message);
     res.status(500).json({ error: err.message });
