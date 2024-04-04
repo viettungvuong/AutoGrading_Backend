@@ -5,6 +5,7 @@ const ExamSession = require("../models/examSession");
 const ExamSessionController = require("../controllers/examSession");
 const User = require("../models/user");
 const Exam = require("../models/exam");
+const Student = require("../models/student");
 
 router.get("/:email", async (req, res) => {
   const sessions = await ExamSessionController.getAllSessionsOfUser(
