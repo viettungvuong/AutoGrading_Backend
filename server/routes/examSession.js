@@ -42,10 +42,11 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/", async (req, res) => {
+router.put("/:id", async (req, res) => {
   // exams la mang chua cac entry o dang {studentId, score}
   try {
-    const { id, exams, userId } = req.body;
+    const id = req.params.id;
+    const { exams, userId } = req.body;
     if (!id || !exams || !userId) {
       return res
         .status(400)
@@ -56,7 +57,7 @@ router.put("/", async (req, res) => {
       var entry = exams[i]; // bai thi
 
       const { studentId, score } = entry;
-      const student = await Student.findOne({ studentiD: studentId }); // tim student
+      const student = await Student.findOne({ studentId: studentId }); // tim student
       if (!student) {
         console.log("Student not found");
         return res.status(401).json({ error: "Student not found" });
