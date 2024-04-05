@@ -46,7 +46,7 @@ router.post("/", async (req, res) => {
 
     const examSession = new ExamSession({
       exams: savedExams,
-      user: user,
+      user: user._id,
     });
 
     const savedExamSession = await examSession.save();
