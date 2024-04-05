@@ -58,7 +58,7 @@ router.put("/", async (req, res) => {
       const { studentId, score } = entry;
       const student = await Student.findOne({ studentiD: studentId }); // tim student
       if (!student) {
-        print("Student not found");
+        console.log("Student not found");
         return res.status(401).json({ error: "Student not found" });
       }
       const newExam = new Exam({ student, score });
