@@ -44,7 +44,7 @@ router.post("/", async (req, res) => {
       studentId: studentId,
     });
     await student.save();
-    res.status(201).json({ students: student });
+    res.status(201).json({ id: student._id }); // tra ve id
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
