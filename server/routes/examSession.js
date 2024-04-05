@@ -18,25 +18,9 @@ router.get("/:email", async (req, res) => {
 router.post("/", async (req, res) => {
   // exams la mang chua cac entry o dang {studentId, score}
   try {
-    const { exams, userId } = req.body;
-    if (!exams || !userId) {
-      return res
-        .status(400)
-        .json({ error: "Both exams and userId are required." });
-    }
-    let savedExams = [];
-    for (var i = 0; i < exams.length; i++) {
-      var entry = exams[i]; // bai thi
-
-      const { studentId, score } = entry;
-      const student = await Student.findOne({ studentId: studentId }); // tim student
-      if (!student) {
-        print("Student not found");
-        return res.status(401).json({ error: "Student not found" });
-      }
-      const newExam = new Exam({ student, score });
-      await newExam.save(); // luu nhung exam moi
-      savedExams.push(newExam); //them _id de refer trong examSession
+    const { userId } = req.body;
+    if (!userId) {
+      return res.status(400).json({ error: "userId is required." });
     }
 
     const user = await User.findOne({ email: userId }); // tim user cho examSession
@@ -45,7 +29,7 @@ router.post("/", async (req, res) => {
     }
 
     const examSession = new ExamSession({
-      exams: savedExams,
+      exams: [],
       user: user,
     });
 
