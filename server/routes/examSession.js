@@ -73,25 +73,8 @@ router.put("/:id", async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    ExamSession.findById(id, (err, document) => {
-      if (err) {
-        return res.status(500).json({ error: err.message });
-      }
-
-      if (!document) {
-        return res.status(404).json({ error: "Session not found" });
-      }
-
-      document.exams = savedExams;
-
-      document.save((err, updatedDocument) => {
-        if (err) {
-          return res.status(500).json({ error: err.message });
-        }
-
-        res.status(200).json({ _id: id });
-      });
-    });
+    await ExamSession.findOneAndUpdate({ _id: id }, { exams: savedExams });
+    res.status(200).json({ _id: id });
   } catch (err) {
     console.log(err.message);
     res.status(500).json({ error: err.message });
