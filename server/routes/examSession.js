@@ -12,7 +12,7 @@ router.get("/:email", async (req, res) => {
   const sessions = await ExamSessionController.getAllSessionsOfUser(
     req.params.email
   );
-  return res.json(sessions); // tra dang json
+  return res.json({ sessions: sessions }); // tra dang json
 });
 
 router.post("/", async (req, res) => {
