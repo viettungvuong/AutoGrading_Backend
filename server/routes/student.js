@@ -31,8 +31,19 @@ router.get("/:email", async (req, res) => {
         });
       });
 
-      return res.status(201).json({ students: [...studentNames] });
+      return res.status(200).json({ students: [...studentNames] });
     });
+});
+
+router.get("/byId/:id", async (req, res) => {
+  try {
+    const student = Student.findById(req.params.id);
+    if (!student) {
+      return res.status(404).json({ student: "null" });
+    } else {
+      return res.status(200).json({ student: student });
+    }
+  } catch (err) {}
 });
 
 router.post("/", async (req, res) => {
