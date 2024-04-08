@@ -37,7 +37,7 @@ router.get("/:email", async (req, res) => {
 
 router.get("/byId/:id", async (req, res) => {
   try {
-    const student = Student.findById(req.params.id);
+    const student = await Student.findById(req.params.id);
     if (!student) {
       return res.status(404).json({ student: "null" });
     } else {
