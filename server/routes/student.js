@@ -41,7 +41,7 @@ router.get("/byId/:id", async (req, res) => {
     if (!student) {
       return res.status(404).json({ student: "null" });
     } else {
-      return res.status(200).json({ student: student });
+      return res.status(200).json(student);
     }
   } catch (err) {}
 });
