@@ -3,6 +3,8 @@ const router = express.Router();
 
 const Student = require("../models/student");
 const ExamSession = require("../models/examSession");
+const ExamSessionController = require("../controllers/examSession");
+const Exam = require("../models/exam");
 
 // router.get("/", async (req, res) => {
 //   try {
@@ -15,24 +17,24 @@ const ExamSession = require("../models/examSession");
 // });
 
 router.get("/:email", async (req, res) => {
-  ExamSession.find({})
-    .populate("exams")
-    .exec((err, sessions) => {
-      if (err) {
-        return res.status(500).send(err);
+  // trả về các student theo user
+  try {
+    const sessions = await ExamSessionController.getAllSessionsOfUser(
+      req.params.email
+    );
+    const studentNames = new Set();
+    for (const session of sessions) {
+      for (const exam of session.exams) {
+        const examData = await Exam.findById(exam._id);
+        const student = await Student.findById(examData.student._id);
+        studentNames.add(student.name);
       }
-
-      const studentNames = new Set();
-      sessions.forEach((session) => {
-        // duyệt qua từng session
-        session.exams.forEach((exam) => {
-          // duyệt qua từng exam
-          studentNames.add(exam.student.name); // trong exam có mục student từ đó có name
-        });
-      });
-
-      return res.status(200).json({ students: [...studentNames] });
-    });
+    }
+    console.log(studentNames);
+    return res.status(200).json({ students: [...studentNames] });
+  } catch (err) {
+    return res.status(500).send(err);
+  }
 });
 
 router.get("/byId/:id", async (req, res) => {
