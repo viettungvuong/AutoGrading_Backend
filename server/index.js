@@ -10,6 +10,7 @@ const ExamRoute = require("./routes/exam");
 const StudentRoute = require("./routes/student");
 const ExamSessionRoute = require("./routes/examSession");
 const LoginRoute = require("./routes/login");
+const ClassRoute = require("./routes/schoolClass");
 
 // ket noi toi mongodb
 mongoose.connect(process.env.MONGO_DB_URL, {
@@ -27,6 +28,7 @@ app.use("/login", LoginRoute);
 app.use("/session", ExamSessionRoute);
 app.use("/exam", ExamRoute);
 app.use("/student", StudentRoute);
+app.use("/class", ClassRoute);
 
 app.listen(3001, () => {
   console.log("server is running on port 3001");

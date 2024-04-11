@@ -4,7 +4,7 @@ const signIn = async (email, inputPassword) => {
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      return false; // User not found
+      throw "User not found";
     }
 
     const isPasswordValid = await bcrypt.compare(inputPassword, user.password);
