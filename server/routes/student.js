@@ -5,6 +5,7 @@ const Student = require("../models/student");
 const ExamSession = require("../models/examSession");
 const ExamSessionController = require("../controllers/examSession");
 const Exam = require("../models/exam");
+const SchoolClass = require("../models/schoolClass");
 
 // router.get("/", async (req, res) => {
 //   try {
@@ -51,10 +52,15 @@ router.get("/byId/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   // them student
   try {
-    const { name, studentId } = req.body;
+    const { name, studentId, classId } = req.body;
+    const schoolClass = await SchoolClass.find({ classId: classId });
+    if (!schoolClass) {
+      throw "This class does not exists";
+    }
     const student = new Student({
       name: name,
       studentId: studentId,
+      schoolClass: schoolClass,
     });
     await student.save();
     res.status(200).json({ id: student._id }); // tra ve id
