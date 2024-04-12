@@ -59,12 +59,12 @@ router.put("/:id", async (req, res) => {
 
       const { studentId, score } = entry;
       console.log(studentId);
-      const student = await Student.find({ studentId: studentId }); // tim student
+      const student = await Student.findOne({ studentId: studentId }); // tim student
       if (!student) {
         console.log("Student not found");
         return res.status(401).json({ error: "Student not found" });
       }
-      const newExam = new Exam({ student, score });
+      const newExam = new Exam({ student: student._id, score });
       await newExam.save(); // luu nhung exam moi
       savedExams.push(newExam); //them _id de refer trong examSession
     }
