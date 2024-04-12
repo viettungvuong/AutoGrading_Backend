@@ -22,6 +22,7 @@ const ExamController = require("../controllers/exam");
 // });
 
 router.get("/:studentId", async (req, res) => {
+  // lay tat ca exam cua student
   try {
     const exams = await ExamController.getAllExamsOfStudent(
       req.params.studentId

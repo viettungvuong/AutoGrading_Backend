@@ -8,6 +8,7 @@ const studentSchema = new mongoose.Schema({
   studentId: {
     type: String,
     required: true,
+    unique: true,
   },
 });
 
