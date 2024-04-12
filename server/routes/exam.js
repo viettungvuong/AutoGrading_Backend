@@ -35,7 +35,7 @@ router.get("/:studentId", async (req, res) => {
 
 router.get("/byId/:id", async (req, res) => {
   try {
-    const exam = await Exam.findById(req.params.id);
+    const exam = await Exam.findById(req.params.id).populate(student);
     res.status(200).json(exam);
   } catch (error) {
     res.status(500).json({ error: error });

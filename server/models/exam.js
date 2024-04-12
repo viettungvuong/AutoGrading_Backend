@@ -12,13 +12,6 @@ const examSchema = new mongoose.Schema({
   },
 });
 
-examSchema.methods.toJSON = function () {
-  const examObject = this.toObject();
-
-  examObject.student = examObject.student.studentId;
-  return examObject;
-};
-
 const Exam = mongoose.model("Exam", examSchema);
 
 module.exports = Exam;
