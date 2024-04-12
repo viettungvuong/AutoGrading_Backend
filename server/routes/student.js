@@ -53,21 +53,25 @@ router.post("/", async (req, res) => {
   // them student
   try {
     const { name, studentId, classId } = req.body;
-    const schoolClass = await SchoolClass.find({ classId: classId });
+    const schoolClass = await SchoolClass.findOne({ classId: classId });
     if (!schoolClass) {
       throw "This class does not exists";
     }
-    const student = await Student.find({ studentId: studentId });
+    let student = await Student.findOne({ studentId: studentId });
+    console.log(student);
     if (!student) {
       student = new Student({
         name: name,
         studentId: studentId,
-        schoolClass: [schoolClass],
+        schoolClass: [schoolClass._id],
       });
       await student.save();
     } else {
-      const currentClasses = student.schoolClass;
-      currentClasses.push(schoolClass);
+      let currentClasses = student.schoolClass;
+      if (!currentClasses) {
+        currentClasses = [];
+      }
+      currentClasses.push(schoolClass._id);
       await Student.findOneAndUpdate(
         { studentId: studentId },
         { schoolClass: currentClasses }
@@ -76,6 +80,7 @@ router.post("/", async (req, res) => {
 
     res.status(200).json({ id: student._id }); // tra ve id
   } catch (err) {
+    console.log(err.message);
     res.status(500).json({ error: err.message });
   }
 });
