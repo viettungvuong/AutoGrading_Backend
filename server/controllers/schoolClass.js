@@ -1,6 +1,28 @@
 const SchoolClass = require("../models/schoolClass");
 const Student = require("../models/student");
 
+const getAllClassesOfUser = async (userEmail) => {
+  try {
+    const schoolClasses = await SchoolClass.aggregate([
+      {
+        $lookup: {
+          from: "users", // The name of the User collection
+          localField: "user", // The field in ExamSession collection
+          foreignField: "_id", // The field in User collection
+          as: "user", // The alias for the joined documents
+        },
+      },
+      { $unwind: "$user" }, // Unwind the array created by the $lookup stage
+      { $match: { "user.email": userEmail } }, // match email
+    ]);
+    console.log(schoolClasses);
+    return schoolClasses;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
 const studentsOfClass = async (classId) => {
   try {
     const schoolClass = await SchoolClass.findById(classId);
@@ -22,25 +44,7 @@ const studentsOfClass = async (classId) => {
   }
 };
 
-const addStudentToClass = async (studentId, classId) => {
-  try {
-    const schoolClass = await SchoolClass.findById(classId);
-    const student = await Student.findById(studentId);
-    if (!schoolClass) {
-      throw "Class does not exists";
-    }
-    if (!student) {
-      throw "Student does not exists";
-    }
-    schoolClass.students.push(studentId);
-    await schoolClass.save();
-    return "Student added to class successfully";
-  } catch (err) {
-    return err.message;
-  }
-};
-
 module.exports = {
-  addStudentToClass,
+  getAllClassesOfUser,
   studentsOfClass,
 };

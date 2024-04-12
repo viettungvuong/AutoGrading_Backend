@@ -39,6 +39,7 @@ router.post("/", async (req, res) => {
       schoolClass = new SchoolClass({
         name: className,
         classId: classId,
+        user: user,
       });
       await schoolClass.save();
     }
@@ -63,7 +64,7 @@ router.put("/:id", async (req, res) => {
   // exams la mang chua cac entry o dang {studentId, score}
   try {
     const id = req.params.id;
-    const { exams, userId } = req.body;
+    const { exams, userId, classId } = req.body;
     if (!id || !exams || !userId) {
       return res
         .status(400)
@@ -75,17 +76,30 @@ router.put("/:id", async (req, res) => {
 
       const { studentId, score } = entry;
       console.log(studentId);
+
       const student = await Student.findOne({ studentId: studentId }); // tim student
       if (!student) {
         console.log("Student not found");
         return res.status(401).json({ error: "Student not found" });
       }
+
+      const schoolClass = await SchoolClass.findOne({ classId: classId });
+      if (!schoolClass) {
+        return res.status(401).json({ error: "School class not found" });
+      }
+
+      // luu class vao student va student vao class
+      student.schoolClass.push(choolClass._id);
+      await student.save();
+      schoolClass.students.push(student._id);
+      await schoolClass.save();
+
       const newExam = new Exam({ student: student._id, score });
       await newExam.save(); // luu nhung exam moi
       savedExams.push(newExam); //them _id de refer trong examSession
     }
 
-    const user = await User.findOne({ email: userId }); // tim user cho examSession
+    const user = await User.findOne({ email: userId }); // tim user cho examSession (de biet session thuoc ve ai)
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
