@@ -57,12 +57,23 @@ router.post("/", async (req, res) => {
     if (!schoolClass) {
       throw "This class does not exists";
     }
-    const student = new Student({
-      name: name,
-      studentId: studentId,
-      schoolClass: schoolClass,
-    });
-    await student.save();
+    const student = await Student.find({ studentId: studentId });
+    if (!student) {
+      student = new Student({
+        name: name,
+        studentId: studentId,
+        schoolClass: [schoolClass],
+      });
+      await student.save();
+    } else {
+      const currentClasses = student.schoolClass;
+      currentClasses.push(schoolClass);
+      await Student.findOneAndUpdate(
+        { studentId: studentId },
+        { schoolClass: currentClasses }
+      ); // update neu da co
+    }
+
     res.status(200).json({ id: student._id }); // tra ve id
   } catch (err) {
     res.status(500).json({ error: err.message });
