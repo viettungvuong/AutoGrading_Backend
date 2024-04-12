@@ -22,13 +22,13 @@ router.get("/:email", async (req, res) => {
   try {
     const sessions = await ExamSessionController.getAllSessionsOfUser(
       req.params.email
-    );
+    ); // đầu tiên là lấy các session của user => các học sinh có liên quan
     const studentNames = new Set();
     for (const session of sessions) {
       for (const exam of session.exams) {
         const examData = await Exam.findById(exam._id);
         const student = await Student.findById(examData.student._id);
-        studentNames.add(student.name);
+        studentNames.add({ name: student.name, studentId: student.studentId });
       }
     }
     console.log(studentNames);
@@ -52,38 +52,38 @@ router.get("/byId/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   // them student
   try {
-    // const { name, studentId, classId } = req.body;
-    const { name, studentId } = req.body;
-    // const schoolClass = await SchoolClass.findOne({ classId: classId });
-    // if (!schoolClass) {
-    //   throw "This class does not exists";
-    // }
-    student = new Student({
-      name: name,
-      studentId: studentId,
-      // schoolClass: [schoolClass._id],
-    });
-    await student.save();
-    // let student = await Student.findOne({ studentId: studentId });
-    // console.log(student);
-    // if (!student) {
-    //   student = new Student({
-    //     name: name,
-    //     studentId: studentId,
-    //     // schoolClass: [schoolClass._id],
-    //   });
-    //   await student.save();
-    // } else {
-    //   let currentClasses = student.schoolClass;
-    //   if (!currentClasses) {
-    //     currentClasses = [];
-    //   }
-    //   currentClasses.push(schoolClass._id);
-    //   await Student.findOneAndUpdate(
-    //     { studentId: studentId },
-    //     { schoolClass: currentClasses }
-    //   ); // update neu da co
-    // }
+    const { name, studentId, classId } = req.body;
+    // const { name, studentId } = req.body;
+    const schoolClass = await SchoolClass.findOne({ classId: classId });
+    if (!schoolClass) {
+      throw "This class does not exists";
+    }
+    // student = new Student({
+    //   name: name,
+    //   studentId: studentId,
+    //   schoolClass: [schoolClass._id],
+    // });
+    // await student.save();
+    let student = await Student.findOne({ studentId: studentId });
+    console.log(student);
+    if (!student) {
+      student = new Student({
+        name: name,
+        studentId: studentId,
+        // schoolClass: [schoolClass._id],
+      });
+      await student.save();
+    } else {
+      let currentClasses = student.schoolClass;
+      if (!currentClasses) {
+        currentClasses = [];
+      }
+      currentClasses.push(schoolClass._id);
+      await Student.findOneAndUpdate(
+        { studentId: studentId },
+        { schoolClass: currentClasses }
+      ); // update neu da co
+    }
 
     res.status(200).json({ id: student._id }); // tra ve id
   } catch (err) {

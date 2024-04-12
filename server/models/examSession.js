@@ -10,6 +10,11 @@ const examSessionSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  schoolClass: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Class",
+    required: true,
+  },
 });
 
 const ExamSession = mongoose.model("ExamSession", examSessionSchema);
