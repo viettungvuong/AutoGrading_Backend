@@ -3,6 +3,7 @@ const router = express.Router();
 
 const SchoolClass = require("../models/schoolClass");
 const ClassController = require("../controllers/schoolClass");
+const User = require("../models/user");
 
 router.get("/:email", async (req, res) => {
   console.log(req.params.email);
@@ -17,11 +18,15 @@ router.get("/byId/:classId", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const { className, classId, user } = req.body;
+    const { className, classId, userId } = req.body;
+    const user = await User.findOne({ email: userId });
+    if (!user) {
+      throw "User does not exists";
+    }
     const schoolClass = new SchoolClass({
       name: className,
       classId: classId,
-      user: user,
+      user: user._id,
     });
     await schoolClass.save();
     return res.status(200).send("Save successfully");
