@@ -26,7 +26,7 @@ router.post("/", async (req, res) => {
     const schoolClass = new SchoolClass({
       name: className,
       classId: classId,
-      user: user._id,
+      user: user,
     });
     await schoolClass.save();
     return res.status(200).send("Save successfully");
