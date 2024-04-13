@@ -15,4 +15,19 @@ router.get("/byId/:classId", async (req, res) => {
   return res.json({ students: students });
 });
 
+router.post("/", async (req, res) => {
+  try {
+    const { className, classId } = req.body;
+    const schoolClass = new SchoolClass({
+      name: className,
+      classId: classId,
+    });
+    await schoolClass.save();
+    return res.status(200).send("Save successfully");
+  } catch (err) {
+    console.log(err.message);
+    return res.status(500).send(err.message);
+  }
+});
+
 module.exports = router;

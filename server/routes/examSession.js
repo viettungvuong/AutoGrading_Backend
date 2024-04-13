@@ -19,7 +19,7 @@ router.get("/:email", async (req, res) => {
 router.post("/", async (req, res) => {
   // exams la mang chua cac entry o dang {studentId, score}
   try {
-    const { name, userId, classId, className } = req.body;
+    const { name, userId, classId } = req.body;
     if (!userId) {
       return res.status(400).json({ error: "userId is required." });
     }
@@ -31,17 +31,18 @@ router.post("/", async (req, res) => {
 
     let schoolClass = await SchoolClass.findOne({ classId: classId });
     if (!schoolClass) {
-      if (!className) {
-        return res
-          .status(400)
-          .json({ error: "New class must be provided with class name" });
-      }
-      schoolClass = new SchoolClass({
-        name: className,
-        classId: classId,
-        user: user,
-      });
-      await schoolClass.save();
+      // if (!className) {
+      //   return res
+      //     .status(400)
+      //     .json({ error: "New class must be provided with class name" });
+      // }
+      // schoolClass = new SchoolClass({
+      //   name: className,
+      //   classId: classId,
+      //   user: user,
+      // });
+      // await schoolClass.save();
+      throw "Class does not exists";
     }
 
     const examSession = new ExamSession({
