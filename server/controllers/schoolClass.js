@@ -25,7 +25,7 @@ const getAllClassesOfUser = async (userEmail) => {
 
 const studentsOfClass = async (classId) => {
   try {
-    const schoolClass = await SchoolClass.findById(classId);
+    const schoolClass = await SchoolClass.findOne({ classId: classId });
     if (!schoolClass) {
       throw "No class exists";
     }

@@ -12,6 +12,7 @@ router.get("/:email", async (req, res) => {
 });
 
 router.get("/byId/:classId", async (req, res) => {
+  // tim cac hoc sinh cua class
   const students = await ClassController.studentsOfClass(req.params.classId);
   return res.json({ students: students });
 });

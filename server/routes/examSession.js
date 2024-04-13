@@ -84,13 +84,14 @@ router.put("/:id", async (req, res) => {
         return res.status(401).json({ error: "Student not found" });
       }
 
+      console.log(classId);
       const schoolClass = await SchoolClass.findOne({ classId: classId });
       if (!schoolClass) {
         return res.status(401).json({ error: "School class not found" });
       }
 
       // luu class vao student va student vao class
-      student.schoolClass.push(choolClass._id);
+      student.schoolClass.push(schoolClass._id);
       await student.save();
       schoolClass.students.push(student._id);
       await schoolClass.save();
