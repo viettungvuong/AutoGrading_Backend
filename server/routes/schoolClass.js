@@ -17,10 +17,11 @@ router.get("/byId/:classId", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const { className, classId } = req.body;
+    const { className, classI, user } = req.body;
     const schoolClass = new SchoolClass({
       name: className,
       classId: classId,
+      user: user,
     });
     await schoolClass.save();
     return res.status(200).send("Save successfully");
