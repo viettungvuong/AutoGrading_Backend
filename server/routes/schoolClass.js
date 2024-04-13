@@ -17,7 +17,7 @@ router.get("/byId/:classId", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const { className, classI, user } = req.body;
+    const { className, classId, user } = req.body;
     const schoolClass = new SchoolClass({
       name: className,
       classId: classId,
