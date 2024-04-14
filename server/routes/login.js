@@ -14,14 +14,16 @@ router.post("/signin", async (req, res) => {
 });
 
 router.post("/signup", async (req, res) => {
+  function validMail(email) {
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; //regex check email
+    return emailRegex.test(email);
+  }
   // dang ky
   const email = req.body.email;
   const inputPassword = req.body.password;
-  console.log(email);
-  console.log(inputPassword);
-  const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; //regex check email
-  const validMail = emailRegex.test(email);
-  if (!validMail) {
+
+  const valid = validMail(email);
+  if (!valid) {
     res.status(400).json({ error: "Invalid email format" });
     return;
   }
@@ -39,6 +41,20 @@ router.post("/signup", async (req, res) => {
   } else {
     res.status(400).json({ error: "Error when registering" });
   }
+});
+
+router.put("/change", async (req, res) => {
+  // dang ky
+  const email = req.body.email;
+  const confirmPassword = req.body.confirmPassword;
+  const newPassword = req.body.newPassword;
+
+  await LoginController.changePassword(
+    email,
+    confirmPassword,
+    newPassword,
+    res
+  );
 });
 
 module.exports = router;

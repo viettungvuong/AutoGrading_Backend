@@ -16,6 +16,7 @@ const signIn = async (email, inputPassword) => {
 };
 
 const register = async (email, password) => {
+  const user = await User.findOne({ email });
   const newUser = new User({
     email: email,
     password: password,
@@ -44,8 +45,32 @@ const emailExists = async (email) => {
     return false;
   }
 };
+
+const changePassword = async (email, confirmPassword, newPassword, res) => {
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      throw "User not found";
+    }
+
+    const isPasswordValid = await bcrypt.compare(
+      confirmPassword,
+      user.password
+    );
+    if (!isPasswordValid) {
+      throw "Wrong password";
+    }
+    user.password = newPassword;
+    await user.save();
+    return res.status(200).send("Successfully changed password");
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send(err.message);
+  }
+};
 module.exports = {
   signIn,
   register,
   emailExists,
+  changePassword,
 };
