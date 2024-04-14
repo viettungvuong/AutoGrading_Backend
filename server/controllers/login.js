@@ -33,7 +33,7 @@ const register = async (email, password) => {
 
 const emailExists = async (email) => {
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: email });
     console.log(user == null);
     if (user == null) {
       return false;
@@ -48,7 +48,7 @@ const emailExists = async (email) => {
 
 const changePassword = async (email, confirmPassword, newPassword, res) => {
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: email });
     if (!user) {
       throw "User not found";
     }
