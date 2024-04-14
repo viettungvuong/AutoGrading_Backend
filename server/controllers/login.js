@@ -65,7 +65,7 @@ const changePassword = async (email, confirmPassword, newPassword, res) => {
     return res.status(200).send("Successfully changed password");
   } catch (error) {
     console.error(error);
-    return res.status(500).send(err.message);
+    return res.status(500).json({ error: err.message });
   }
 };
 module.exports = {
