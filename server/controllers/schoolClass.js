@@ -31,13 +31,14 @@ const studentsOfClass = async (classId) => {
     }
 
     const res = [];
-    const students = schoolClass.students;
-    students.forEach(async (student) => {
+    for (const student of schoolClass.students) {
       const findStudent = await Student.findById(student._id);
+      console.log(findStudent);
       if (findStudent) {
         res.push(findStudent);
       }
-    });
+    }
+    console.log(res);
     return res;
   } catch (err) {
     return null;
