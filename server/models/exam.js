@@ -10,6 +10,10 @@ const examSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  graded_paper_img: {
+    // lưu đường dẫn tới file hình bài thi đã chấm
+    type: String,
+  },
 });
 
 const Exam = mongoose.model("Exam", examSchema);

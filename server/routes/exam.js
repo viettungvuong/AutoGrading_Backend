@@ -21,6 +21,7 @@ const ExamController = require("../controllers/exam");
 //   }
 // });
 
+// tim cac exam cua student
 router.get("/:studentId", async (req, res) => {
   // lay tat ca exam cua student
   try {
@@ -33,6 +34,7 @@ router.get("/:studentId", async (req, res) => {
   }
 });
 
+// tim exam theo id
 router.get("/byId/:id", async (req, res) => {
   try {
     const exam = await Exam.findById(req.params.id).populate("student");

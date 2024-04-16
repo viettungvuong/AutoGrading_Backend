@@ -16,6 +16,7 @@ router.get("/:email", async (req, res) => {
   return res.json({ sessions: sessions }); // tra dang json
 });
 
+// luu session moi
 router.post("/", async (req, res) => {
   // exams la mang chua cac entry o dang {studentId, score}
   try {
@@ -61,6 +62,7 @@ router.post("/", async (req, res) => {
   }
 });
 
+// update exam session da co san
 router.put("/:id", async (req, res) => {
   // exams la mang chua cac entry o dang {studentId, score}
   try {
@@ -73,9 +75,10 @@ router.put("/:id", async (req, res) => {
     }
     let savedExams = [];
     for (var i = 0; i < exams.length; i++) {
+      // voi tung exam
       var entry = exams[i]; // bai thi
 
-      const { studentId, score } = entry;
+      const { studentId, score, graded_paper_link } = entry;
       console.log(studentId);
 
       const student = await Student.findOne({ studentId: studentId }); // tim student
@@ -96,7 +99,11 @@ router.put("/:id", async (req, res) => {
       schoolClass.students.push(student._id);
       await schoolClass.save();
 
-      const newExam = new Exam({ student: student._id, score });
+      const newExam = new Exam({
+        student: student._id,
+        score,
+        graded_paper_img: graded_paper_link,
+      });
       await newExam.save(); // luu nhung exam moi
       savedExams.push(newExam); //them _id de refer trong examSession
     }

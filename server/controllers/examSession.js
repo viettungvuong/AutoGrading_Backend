@@ -1,6 +1,7 @@
 const ExamSession = require("../models/examSession");
 const mongoose = require("mongoose");
 
+// lay cac session cua user
 const getAllSessionsOfUser = async (userEmail) => {
   try {
     const examSessions = await ExamSession.aggregate([
