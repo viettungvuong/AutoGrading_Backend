@@ -8,7 +8,7 @@ const Exam = require("../models/exam");
 const Student = require("../models/student");
 const SchoolClass = require("../models/schoolClass");
 
-const { verifyToken } = require("./controllers/auth");
+const { verifyToken } = require("../controllers/auth");
 
 router.use(verifyToken);
 

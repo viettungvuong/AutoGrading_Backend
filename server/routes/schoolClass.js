@@ -5,7 +5,7 @@ const SchoolClass = require("../models/schoolClass");
 const ClassController = require("../controllers/schoolClass");
 const User = require("../models/user");
 
-const { verifyToken } = require("./controllers/auth");
+const { verifyToken } = require("../controllers/auth");
 
 router.use(verifyToken);
 

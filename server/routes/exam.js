@@ -9,7 +9,7 @@ const path = require("path");
 const fs = require("fs");
 const ExamSession = require("../models/examSession");
 
-const { verifyToken } = require("./controllers/auth");
+const { verifyToken } = require("../controllers/auth");
 
 // khong up le Exam len duoc ma Exam luon phu thuoc vao ExamSession
 // router.post("/", async (req, res) => {
