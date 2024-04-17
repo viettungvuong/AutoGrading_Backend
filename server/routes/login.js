@@ -10,7 +10,7 @@ router.post("/signin", async (req, res) => {
 
   if (login) {
     // tạo jwt token
-    const token = jwt.sign({ email: req.body.email }, generateRandomKey(), {
+    const token = jwt.sign({ email: req.body.email }, process.env.SECRET_KEY, {
       expiresIn: "1d",
     });
 
@@ -45,7 +45,7 @@ router.post("/signup", async (req, res) => {
   console.log(register);
 
   if (register == true) {
-    const token = jwt.sign({ email: req.body.email }, generateRandomKey(), {
+    const token = jwt.sign({ email: req.body.email }, process.env.SECRET_KEY, {
       expiresIn: "1d",
     });
 
