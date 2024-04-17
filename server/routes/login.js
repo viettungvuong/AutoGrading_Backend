@@ -1,6 +1,7 @@
 const app = require("express");
 const router = app.Router();
 const LoginController = require("../controllers/login");
+const { generateRandomKey } = require("../controllers/auth");
 
 router.post("/signin", async (req, res) => {
   // Login
@@ -8,7 +9,7 @@ router.post("/signin", async (req, res) => {
 
   if (login) {
     // tạo jwt token
-    const token = jwt.sign({ email: req.body.email }, process.env.SECRET_KEY, {
+    const token = jwt.sign({ email: req.body.email }, generateRandomKey(), {
       expiresIn: "1d",
     });
 
@@ -43,7 +44,7 @@ router.post("/signup", async (req, res) => {
   console.log(register);
 
   if (register == true) {
-    const token = jwt.sign({ email: req.body.email }, process.env.SECRET_KEY, {
+    const token = jwt.sign({ email: req.body.email }, generateRandomKey(), {
       expiresIn: "1d",
     });
 
