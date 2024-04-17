@@ -8,6 +8,10 @@ const Exam = require("../models/exam");
 const Student = require("../models/student");
 const SchoolClass = require("../models/schoolClass");
 
+const { verifyToken } = require("./controllers/auth");
+
+router.use(verifyToken);
+
 router.get("/:email", async (req, res) => {
   console.log(req.params.email);
   const sessions = await ExamSessionController.getAllSessionsOfUser(

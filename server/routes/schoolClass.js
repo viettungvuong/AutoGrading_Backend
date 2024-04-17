@@ -5,6 +5,10 @@ const SchoolClass = require("../models/schoolClass");
 const ClassController = require("../controllers/schoolClass");
 const User = require("../models/user");
 
+const { verifyToken } = require("./controllers/auth");
+
+router.use(verifyToken);
+
 router.get("/:email", async (req, res) => {
   console.log(req.params.email);
   const classes = await ClassController.getAllClassesOfUser(req.params.email);

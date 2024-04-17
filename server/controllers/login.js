@@ -1,5 +1,7 @@
 const bcrypt = require("bcryptjs");
 const User = require("../models/user");
+const jwt = require("jsonwebtoken");
+
 const signIn = async (email, inputPassword) => {
   try {
     const user = await User.findOne({ email });
@@ -68,6 +70,7 @@ const changePassword = async (email, confirmPassword, newPassword, res) => {
     return res.status(500).json({ error: err.message });
   }
 };
+
 module.exports = {
   signIn,
   register,

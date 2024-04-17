@@ -7,6 +7,10 @@ const ExamSessionController = require("../controllers/examSession");
 const Exam = require("../models/exam");
 const SchoolClass = require("../models/schoolClass");
 
+const { verifyToken } = require("./controllers/auth");
+
+router.use(verifyToken);
+
 // router.get("/", async (req, res) => {
 //   try {
 //     // lay moi entries trong bang Student

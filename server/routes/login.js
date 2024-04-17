@@ -3,11 +3,17 @@ const router = app.Router();
 const LoginController = require("../controllers/login");
 
 router.post("/signin", async (req, res) => {
-  //dang nhap
+  // Login
   const login = await LoginController.signIn(req.body.email, req.body.password);
 
-  if (login == true) {
-    return res.status(200).send("Sign in successfully");
+  if (login) {
+    // tạo jwt token
+    const token = jwt.sign({ email: req.body.email }, process.env.SECRET_KEY, {
+      expiresIn: "1d",
+    });
+
+    // trả token để xác thực sau này
+    return res.status(200).json({ token: token });
   } else {
     return res.status(400).json({ error: "Error when signing in" });
   }
@@ -37,7 +43,12 @@ router.post("/signup", async (req, res) => {
   console.log(register);
 
   if (register == true) {
-    res.status(200).send("Registered successfully");
+    const token = jwt.sign({ email: req.body.email }, process.env.SECRET_KEY, {
+      expiresIn: "1d",
+    });
+
+    // trả token
+    res.status(200).json({ token: token });
   } else {
     res.status(400).json({ error: "Error when registering" });
   }
