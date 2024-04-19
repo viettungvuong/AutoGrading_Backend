@@ -27,6 +27,14 @@ const classSchema = new mongoose.Schema({
   },
 });
 
+classSchema.pre("save", function (next) {
+  if (!this.code) {
+    const code = generateRandomCode();
+    this.code = code;
+  }
+  next();
+});
+
 const Class = mongoose.model("Class", classSchema);
 
 module.exports = Class;

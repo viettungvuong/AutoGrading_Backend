@@ -48,7 +48,30 @@ const studentsOfClass = async (classId, userEmail) => {
   }
 };
 
+const studentJoinClass = async (code, userId, res) => {
+  const user = await User.findOne({ email: userId });
+  if (!user) {
+    return res.status(400).json({ error: "User does not exist" });
+  }
+  if (user.isStudent == false) {
+    return res.status(400).json({ error: "Not a student" });
+  }
+  const schoolClass = await SchoolClass.findOne({ code: code });
+  if (!schoolClass) {
+    return res.status(400).json({ error: "Class does not exist" });
+  }
+  if (schoolClass.students.includes(user._id)) {
+    return res
+      .status(400)
+      .json({ error: "User is already a member of this class" });
+  }
+  schoolClass.students.push(user._id);
+  await schoolClass.save();
+  return res.status(200).json({ message: "Joining class successfully" });
+};
+
 module.exports = {
   getAllClassesOfUser,
   studentsOfClass,
+  studentJoinClass,
 };
