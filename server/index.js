@@ -50,7 +50,7 @@ io.on("connection", (socket) => {
     const recipientSocket = userSocketMap.get(recipientStudentId);
     if (recipientSocket) {
       // gui thong tin toi hoc sinh
-      io.to(recipientSocket).emit("exam", data.exam);
+      io.emit("exam", data);
     }
   });
 

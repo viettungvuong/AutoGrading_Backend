@@ -15,6 +15,11 @@ const studentSchema = new mongoose.Schema({
       ref: "Class",
     },
   ],
+  user: {
+    // nếu student này có liên kết tài khoản
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 const Student = mongoose.model("Student", studentSchema);

@@ -6,6 +6,7 @@ const ExamSession = require("../models/examSession");
 const ExamSessionController = require("../controllers/examSession");
 const Exam = require("../models/exam");
 const SchoolClass = require("../models/schoolClass");
+const User = require("../models/user");
 
 const { verifyToken } = require("../controllers/auth");
 
@@ -39,6 +40,22 @@ router.get("/:email", async (req, res) => {
     return res.status(200).json({ students: [...studentNames] });
   } catch (err) {
     return res.status(500).send(err);
+  }
+});
+
+router.get("/byEmail/:email", async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.params.email });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" }); // tim user ung voi email trc
+    }
+    const student = await Student.findOne({ user: user._id });
+    if (!student) {
+      return res.status(404).json({ error: "Student not found" }); // tim xem co student nao ref toi user da tim dc hay kh
+    }
+    return res.status(200).json(student);
+  } catch (err) {
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
