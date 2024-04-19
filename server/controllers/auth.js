@@ -14,10 +14,6 @@ const verifyToken = (req, res, next) => {
   });
 };
 
-const generateRandomKey = () => {
-  return crypto.randomBytes(32).toString("hex");
-};
-
 module.exports = {
   verifyToken,
   generateRandomKey,

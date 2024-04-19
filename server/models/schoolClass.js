@@ -20,6 +20,11 @@ const classSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  code: {
+    type: String,
+    required: true,
+    unique: true,
+  },
 });
 
 const Class = mongoose.model("Class", classSchema);
