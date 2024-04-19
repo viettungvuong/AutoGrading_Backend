@@ -16,6 +16,10 @@ const userSchema = new mongoose.Schema({
     default: false,
     required: true,
   },
+  name: {
+    type: String,
+    required: true,
+  },
 });
 
 userSchema.pre("save", async function (next) {

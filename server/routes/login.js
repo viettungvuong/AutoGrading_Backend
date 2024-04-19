@@ -29,6 +29,8 @@ router.post("/signup", async (req, res) => {
   // dang ky
   const email = req.body.email;
   const inputPassword = req.body.password;
+  const name = req.body.name;
+  const isStudent = req.body.isStudent;
 
   const valid = validMail(email);
   if (!valid) {
@@ -41,7 +43,12 @@ router.post("/signup", async (req, res) => {
     return;
   }
 
-  const register = await LoginController.register(email, inputPassword);
+  const register = await LoginController.register(
+    name,
+    email,
+    inputPassword,
+    isStudent
+  );
   console.log(register);
 
   if (register == true) {

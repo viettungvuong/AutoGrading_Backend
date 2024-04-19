@@ -17,11 +17,12 @@ const signIn = async (email, inputPassword) => {
   }
 };
 
-const register = async (email, password) => {
-  const user = await User.findOne({ email });
+const register = async (name, email, password, isStudent) => {
   const newUser = new User({
+    name: name,
     email: email,
     password: password,
+    isStudent: isStudent,
   });
 
   try {
