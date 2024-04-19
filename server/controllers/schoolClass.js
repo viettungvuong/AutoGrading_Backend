@@ -23,9 +23,12 @@ const getAllClassesOfUser = async (userEmail) => {
   }
 };
 
-const studentsOfClass = async (classId) => {
+const studentsOfClass = async (classId, userEmail) => {
   try {
-    const schoolClass = await SchoolClass.findById(classId);
+    const schoolClass = await SchoolClass.findOne({
+      _id: classId,
+      "user.email": userEmail,
+    });
     if (!schoolClass) {
       throw "No class exists";
     }
