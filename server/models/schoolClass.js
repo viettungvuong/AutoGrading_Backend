@@ -23,7 +23,6 @@ const classSchema = new mongoose.Schema({
   },
   code: {
     type: String,
-    required: true,
     unique: true,
   },
 });
