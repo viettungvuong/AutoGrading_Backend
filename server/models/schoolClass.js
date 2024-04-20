@@ -37,6 +37,7 @@ classSchema.pre("save", function (next) {
   }
 
   const code = generateRandomCode();
+  this.code = code;
   next();
 });
 
