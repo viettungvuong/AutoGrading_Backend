@@ -24,6 +24,7 @@ router.get("/byId/:classId", async (req, res) => {
   return res.json({ students: students });
 });
 
+// tao class
 router.post("/", async (req, res) => {
   try {
     const { className, classId, userId } = req.body;
@@ -37,10 +38,10 @@ router.post("/", async (req, res) => {
       user: user,
     });
     await schoolClass.save();
-    return res.status(200).send("Save successfully");
+    return res.status(200).json({ code: schoolClass.code });
   } catch (err) {
     console.log(err.message);
-    return res.status(500).send(err.message);
+    return res.status(500).json({ error: err.message });
   }
 });
 
