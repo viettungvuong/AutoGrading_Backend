@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const crypto = require("crypto");
 
 const classSchema = new mongoose.Schema({
   name: {
@@ -28,10 +29,14 @@ const classSchema = new mongoose.Schema({
 });
 
 classSchema.pre("save", function (next) {
-  if (!this.code) {
-    const code = generateRandomCode();
-    this.code = code;
+  function generateRandomCode() {
+    const randomBytes = crypto.randomBytes(8);
+    const code = randomBytes.toString("hex");
+
+    return code;
   }
+
+  const code = generateRandomCode();
   next();
 });
 

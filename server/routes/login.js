@@ -1,7 +1,6 @@
 const app = require("express");
 const router = app.Router();
 const LoginController = require("../controllers/login");
-const { generateRandomKey } = require("../controllers/auth");
 const jwt = require("jsonwebtoken");
 
 router.post("/signin", async (req, res) => {
