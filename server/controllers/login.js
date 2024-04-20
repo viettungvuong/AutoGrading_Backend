@@ -10,10 +10,12 @@ const signIn = async (email, inputPassword) => {
     }
 
     const isPasswordValid = await bcrypt.compare(inputPassword, user.password);
-    return isPasswordValid;
+    if (isPasswordValid == true) {
+      return user;
+    }
   } catch (error) {
     console.error(error);
-    return false;
+    return null;
   }
 };
 

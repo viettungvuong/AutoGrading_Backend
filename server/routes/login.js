@@ -8,14 +8,14 @@ router.post("/signin", async (req, res) => {
   // Login
   const login = await LoginController.signIn(req.body.email, req.body.password);
 
-  if (login) {
+  if (login != null) {
     // tạo jwt token
     const token = jwt.sign({ email: req.body.email }, process.env.SECRET_KEY, {
       expiresIn: "1d",
     });
 
     // trả token để xác thực sau này
-    return res.status(200).json({ token: token });
+    return res.status(200).json({ token: token, isStudent: login.isStudent });
   } else {
     return res.status(400).json({ error: "Error when signing in" });
   }
