@@ -16,7 +16,11 @@ router.post("/signin", async (req, res) => {
     // trả token để xác thực sau này
     return res.status(200).json({ token: token, isStudent: login.isStudent });
   } else {
-    return res.status(400).json({ error: "Error when signing in" });
+    return res
+      .status(400)
+      .json({
+        error: "Error when signing in: Check your username and password",
+      });
   }
 });
 
