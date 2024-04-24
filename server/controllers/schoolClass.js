@@ -57,7 +57,7 @@ const studentJoinClass = async (code, userId, res) => {
   // if (user.isStudent == false) {
   //   return res.status(400).json({ error: "Not a student" });
   // }
-  const student = Student.findOne({})
+  const student = await Student.findOne({})
     .populate({
       path: "user",
       match: { email: userId },
