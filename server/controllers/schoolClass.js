@@ -82,9 +82,9 @@ const studentJoinClass = async (code, userId, res) => {
       .status(400)
       .json({ error: "User is already a member of this class" });
   }
-  schoolClass.students.push(student);
+  schoolClass.students.push(student._id);
   await schoolClass.save();
-  student.schoolClass.push(schoolClass);
+  student.schoolClass.push(schoolClass._id);
   await student.save();
   return res.status(200).json({ class: schoolClass });
 };
