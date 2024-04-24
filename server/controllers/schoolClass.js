@@ -87,6 +87,7 @@ const studentJoinClass = async (code, userId, res) => {
   await schoolClass.save();
   student.schoolClass.push(schoolClass._id);
   await student.save();
+  console.log(schoolClass);
   return res.status(200).json({ class: schoolClass });
 };
 
