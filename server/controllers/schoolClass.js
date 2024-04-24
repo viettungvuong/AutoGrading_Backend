@@ -57,35 +57,27 @@ const studentJoinClass = async (code, userId, res) => {
   // if (user.isStudent == false) {
   //   return res.status(400).json({ error: "Not a student" });
   // }
-  const student = await Student.findOne({})
-    .populate({
-      path: "user",
-      match: { email: userId },
-    })
-    .then((student) => {
-      if (student) {
-        console.log("Found student:", student);
-      } else {
-        return res.status(404).json({ error: "Student does not exist" });
-      }
-    })
-    .catch((error) => {
-      return res.status(400).json({ error: error.message });
-    });
+  const student = await Student.findOne({ "user.email": userId })
+    .populate("user")
+    .exec();
+
+  if (!student) {
+    return res.status(404).json({ error: "Student does not exist" });
+  }
 
   const schoolClass = await SchoolClass.findOne({ code: code });
 
   if (!schoolClass) {
-    return res.status(400).json({ error: "Class does not exist" });
+    return res.status(404).json({ error: "Class does not exist" });
   }
-  console.log("Found school class" + schoolClass);
+
   if (schoolClass.students.includes(student._id)) {
     return res
       .status(400)
       .json({ error: "User is already a member of this class" });
   }
-  console.log(student._id);
-  console.log(schoolClass._id);
+  console.log(student);
+  console.log(schoolClass);
   schoolClass.students.push(student._id);
   await schoolClass.save();
   student.schoolClass.push(schoolClass._id);
