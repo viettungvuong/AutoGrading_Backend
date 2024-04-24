@@ -82,7 +82,7 @@ const studentJoinClass = async (code, userId, res) => {
     return res.status(404).json({ error: "Student does not exist" });
   }
 
-  const student = findStudents[0];
+  let student = findStudents[0];
 
   const schoolClass = await SchoolClass.findOne({ code: code });
 
