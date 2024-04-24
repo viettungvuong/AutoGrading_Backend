@@ -16,11 +16,9 @@ router.post("/signin", async (req, res) => {
     // trả token để xác thực sau này
     return res.status(200).json({ token: token, isStudent: login.isStudent });
   } else {
-    return res
-      .status(400)
-      .json({
-        error: "Error when signing in: Check your username and password",
-      });
+    return res.status(400).json({
+      error: "Error when signing in: Check your username and password",
+    });
   }
 });
 
@@ -34,6 +32,7 @@ router.post("/signup", async (req, res) => {
   const inputPassword = req.body.password;
   const name = req.body.name;
   const isStudent = req.body.isStudent;
+  const studentId = req.body.studentId;
 
   const valid = validMail(email);
   if (!valid) {
@@ -50,7 +49,8 @@ router.post("/signup", async (req, res) => {
     name,
     email,
     inputPassword,
-    isStudent
+    isStudent,
+    studentId
   );
   console.log(register);
 
