@@ -74,6 +74,7 @@ const studentJoinClass = async (code, userId, res) => {
     });
 
   const schoolClass = await SchoolClass.findOne({ code: code });
+  console.log(schoolClass);
   if (!schoolClass) {
     return res.status(400).json({ error: "Class does not exist" });
   }
