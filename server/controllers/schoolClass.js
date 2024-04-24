@@ -66,12 +66,13 @@ const studentJoinClass = async (code, userId, res) => {
       if (student) {
         console.log("Found student:", student);
       } else {
-        console.log("No student found with the given name.");
+        return res.status(404).json({ error: "Student does not exist" });
       }
     })
     .catch((error) => {
-      console.error("Error:", error);
+      return res.status(400).json({ error: error.message });
     });
+
   const schoolClass = await SchoolClass.findOne({ code: code });
   if (!schoolClass) {
     return res.status(400).json({ error: "Class does not exist" });
