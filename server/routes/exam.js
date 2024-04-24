@@ -37,7 +37,7 @@ router.get("/:studentId", async (req, res) => {
     const exams = await ExamController.getAllExamsOfStudent(
       req.params.studentId
     );
-    res.status(200).json(exams);
+    res.status(200).json({ exams: exams });
   } catch (error) {
     res.status(500).json({ error: error });
   }
