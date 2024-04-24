@@ -71,7 +71,7 @@ const studentJoinClass = async (code, userId, res) => {
     },
     {
       $match: {
-        "userData.studentId": userId, // Match based on userId
+        "userData.email": userId, // Match based on userId
       },
     },
     {
