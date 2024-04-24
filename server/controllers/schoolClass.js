@@ -57,9 +57,27 @@ const studentJoinClass = async (code, userId, res) => {
   // if (user.isStudent == false) {
   //   return res.status(400).json({ error: "Not a student" });
   // }
-  const student = await Student.findOne({ "user.email": userId })
-    .populate("user")
-    .exec();
+  const student = await Student.aggregate([
+    {
+      $lookup: {
+        from: "users", // Name of the collection to join with
+        localField: "user", // Field from the exams collection
+        foreignField: "_id", // Field from the students collection
+        as: "userData", // Alias for the joined student data
+      },
+    },
+    {
+      $unwind: "$userData", // Unwind the result array
+    },
+    {
+      $match: {
+        "userData.studentId": userId, // Match based on userId
+      },
+    },
+    {
+      $limit: 1, // Limit the result to only one document
+    },
+  ]);
 
   if (!student) {
     return res.status(404).json({ error: "Student does not exist" });
