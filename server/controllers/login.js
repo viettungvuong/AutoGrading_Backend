@@ -20,7 +20,7 @@ const signIn = async (email, inputPassword) => {
   }
 };
 
-const register = async (name, email, password, isStudent, studentId = null) => {
+const register = async (name, email, password, isStudent, studentId) => {
   const newUser = new User({
     name: name,
     email: email,
