@@ -57,7 +57,7 @@ const studentJoinClass = async (code, userId, res) => {
   // if (user.isStudent == false) {
   //   return res.status(400).json({ error: "Not a student" });
   // }
-  const student = await Student.aggregate([
+  const findStudents = await Student.aggregate([
     {
       $lookup: {
         from: "users", // Name of the collection to join with
@@ -78,10 +78,11 @@ const studentJoinClass = async (code, userId, res) => {
       $limit: 1, // Limit the result to only one document
     },
   ]);
-
-  if (!student) {
+  if (!findStudents) {
     return res.status(404).json({ error: "Student does not exist" });
   }
+
+  const student = findStudents[0];
 
   const schoolClass = await SchoolClass.findOne({ code: code });
 
