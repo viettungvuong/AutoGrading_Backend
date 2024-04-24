@@ -37,7 +37,7 @@ const register = async (name, email, password, isStudent, studentId) => {
         return false;
       }
 
-      print(newUser._id);
+      console.log(newUser._id);
 
       await StudentController.addStudent(name, studentId, newUser._id); // them ref cua user vao student
     }
