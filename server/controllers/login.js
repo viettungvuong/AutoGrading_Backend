@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const User = require("../models/user");
+const StudentController = require("../controllers/student");
 const jwt = require("jsonwebtoken");
 
 const signIn = async (email, inputPassword) => {
@@ -19,16 +20,25 @@ const signIn = async (email, inputPassword) => {
   }
 };
 
-const register = async (name, email, password, isStudent) => {
+const register = async (name, email, password, isStudent, studentId = null) => {
   const newUser = new User({
     name: name,
     email: email,
     password: password,
     isStudent: isStudent,
+    studentId: studentId,
   });
 
   try {
     await newUser.save();
+
+    if (isStudent == true) {
+      if (studentId == null) {
+        return false;
+      }
+
+      await StudentController.addStudent(name, studentId, newUser._id); // them ref cua user vao student
+    }
     return true;
   } catch (err) {
     console.log(err.message);

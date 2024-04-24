@@ -20,6 +20,18 @@ const calculateStudentAvg = (studentId) => {
     });
 };
 
+const addStudent = async (name, studentId, user = null) => {
+  const student = new Student({
+    name: name,
+    studentId: studentId,
+  });
+  if (user != null) {
+    student.user = user;
+  }
+  await student.save();
+};
+
 module.exports = {
   calculateStudentAvg,
+  addStudent,
 };

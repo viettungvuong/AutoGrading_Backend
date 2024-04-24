@@ -4,6 +4,7 @@ const router = express.Router();
 const Student = require("../models/student");
 const ExamSession = require("../models/examSession");
 const ExamSessionController = require("../controllers/examSession");
+const StudentController = require("../controllers/student");
 const Exam = require("../models/exam");
 const SchoolClass = require("../models/schoolClass");
 const User = require("../models/user");
@@ -88,12 +89,7 @@ router.post("/", async (req, res) => {
     let student = await Student.findOne({ studentId: studentId });
     console.log(student);
     if (!student) {
-      student = new Student({
-        name: name,
-        studentId: studentId,
-        // schoolClass: [schoolClass._id],
-      });
-      await student.save();
+      await StudentController.addStudent(name, studentId);
     } else {
       let currentClasses = student.schoolClass;
       if (!currentClasses) {

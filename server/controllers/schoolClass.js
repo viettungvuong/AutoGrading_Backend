@@ -83,7 +83,7 @@ const studentJoinClass = async (code, userId, res) => {
   }
   schoolClass.students.push(student._id);
   await schoolClass.save();
-  return res.status(200).json({ message: "Joining class successfully" });
+  return res.status(200).json({ class: schoolClass });
 };
 
 module.exports = {
