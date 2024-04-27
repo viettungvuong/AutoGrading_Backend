@@ -24,7 +24,8 @@ router.get("/:email", async (req, res) => {
 router.post("/", async (req, res) => {
   // exams la mang chua cac entry o dang {studentId, score}
   try {
-    const { name, userId, classId, answers, available_choices } = req.body;
+    const { name, userId, classId, answers, available_choices, questions } =
+      req.body;
 
     if (typeof answers !== "object" || !Object.keys(answers).length) {
       return res.status(400).json({ error: "Invalid 'answers' format." });
@@ -71,6 +72,7 @@ router.post("/", async (req, res) => {
       schoolClass: schoolClass._id,
       answers: answers,
       available_choices: available_choices,
+      questions: questions,
     });
 
     const savedExamSession = await examSession.save();

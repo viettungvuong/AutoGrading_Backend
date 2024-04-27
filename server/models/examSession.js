@@ -23,6 +23,10 @@ const examSessionSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  questions: {
+    type: Number,
+    required: true,
+  },
 });
 
 const ExamSession = mongoose.model("ExamSession", examSessionSchema);
