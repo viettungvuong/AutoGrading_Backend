@@ -31,11 +31,11 @@ const { verifyToken } = require("../controllers/auth");
 router.use(verifyToken);
 
 // tim cac exam cua student
-router.get("/:studentId", async (req, res) => {
+router.get("/:studentEmail", async (req, res) => {
   // lay tat ca exam cua student
   try {
     const exams = await ExamController.getAllExamsOfStudent(
-      req.params.studentId
+      req.params.studentEmail
     );
     res.status(200).json({ exams: exams });
   } catch (error) {

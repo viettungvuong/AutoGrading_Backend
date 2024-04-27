@@ -50,13 +50,6 @@ const studentsOfClass = async (classId, userEmail) => {
 };
 
 const studentJoinClass = async (code, userId, res) => {
-  // const user = await User.findOne({ email: userId });
-  // if (!user) {
-  //   return res.status(400).json({ error: "User does not exist" });
-  // }
-  // if (user.isStudent == false) {
-  //   return res.status(400).json({ error: "Not a student" });
-  // }
   const findStudents = await Student.aggregate([
     {
       $lookup: {
