@@ -17,7 +17,7 @@ const examSessionSchema = new mongoose.Schema({
   },
   answers: {
     type: Map,
-    of: Int,
+    of: Number,
   },
   available_choices: {
     type: Number,
