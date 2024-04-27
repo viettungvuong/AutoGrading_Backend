@@ -15,6 +15,14 @@ const examSessionSchema = new mongoose.Schema({
     ref: "Class",
     required: true,
   },
+  answers: {
+    type: mongoose.Schema.Types.Mixed,
+    required: true,
+  },
+  available_choices: {
+    type: Number,
+    required: true,
+  },
 });
 
 const ExamSession = mongoose.model("ExamSession", examSessionSchema);

@@ -24,7 +24,7 @@ router.get("/:email", async (req, res) => {
 router.post("/", async (req, res) => {
   // exams la mang chua cac entry o dang {studentId, score}
   try {
-    const { name, userId, classId } = req.body;
+    const { name, userId, classId, answers, available_choices } = req.body;
     if (!userId) {
       return res.status(400).json({ error: "userId is required." });
     }
@@ -55,6 +55,8 @@ router.post("/", async (req, res) => {
       exams: [],
       user: user,
       schoolClass: schoolClass._id,
+      answers: answers,
+      available_choices: available_choices,
     });
 
     const savedExamSession = await examSession.save();
