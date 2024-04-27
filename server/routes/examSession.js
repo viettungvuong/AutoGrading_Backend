@@ -25,6 +25,20 @@ router.post("/", async (req, res) => {
   // exams la mang chua cac entry o dang {studentId, score}
   try {
     const { name, userId, classId, answers, available_choices } = req.body;
+
+    if (typeof answers !== "object" || !Object.keys(answers).length) {
+      return res.status(400).json({ error: "Invalid 'answers' format." });
+    }
+
+    // Ensure all values in the 'answers' map are integers
+    for (const [key, value] of Object.entries(answers)) {
+      if (typeof value !== "number" || !Number.isInteger(value)) {
+        return res.status(400).json({
+          error: `Invalid answer for ${key}: must be an integer.`,
+        });
+      }
+    }
+
     if (!userId) {
       return res.status(400).json({ error: "userId is required." });
     }
