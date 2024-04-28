@@ -130,7 +130,7 @@ router.put("/:id", async (req, res) => {
         student: student._id,
         score,
         graded_paper_img: graded_paper_link,
-        session: session,
+        session: session._id,
       });
 
       await newExam.save(); // luu nhung exam moi

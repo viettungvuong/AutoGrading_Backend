@@ -16,7 +16,6 @@ const getAllSessionsOfUser = async (userEmail) => {
       { $unwind: "$user" }, // Unwind the array created by the $lookup stage
       { $match: { "user.email": userEmail } }, // match email
     ]);
-    console.log(examSessions);
     return examSessions;
   } catch (error) {
     console.error(error);
