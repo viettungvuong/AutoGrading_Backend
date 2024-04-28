@@ -38,7 +38,9 @@ router.post("/", async (req, res) => {
       user: user,
     });
     await schoolClass.save();
-    return res.status(200).json({ code: schoolClass.code });
+    return res
+      .status(200)
+      .json({ code: schoolClass.code, id: schoolClass._id });
   } catch (err) {
     console.log(err.message);
     return res.status(500).json({ error: err.message });
