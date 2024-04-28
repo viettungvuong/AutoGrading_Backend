@@ -95,6 +95,12 @@ router.put("/:id", async (req, res) => {
         .status(400)
         .json({ error: "Id, exams, and userId are required." });
     }
+
+    let session = await ExamSession.findById(id);
+    if (!session) {
+      return res.status(404).json({ error: "Session not found" });
+    }
+
     let savedExams = [];
     for (var i = 0; i < exams.length; i++) {
       // voi tung exam
@@ -109,7 +115,6 @@ router.put("/:id", async (req, res) => {
         return res.status(401).json({ error: "Student not found" });
       }
 
-      console.log(classId);
       const schoolClass = await SchoolClass.findOne({ classId: classId });
       if (!schoolClass) {
         return res.status(401).json({ error: "School class not found" });
@@ -125,7 +130,9 @@ router.put("/:id", async (req, res) => {
         student: student._id,
         score,
         graded_paper_img: graded_paper_link,
+        session: session,
       });
+
       await newExam.save(); // luu nhung exam moi
       savedExams.push(newExam); //them _id de refer trong examSession
     }
@@ -134,8 +141,7 @@ router.put("/:id", async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
-
-    await ExamSession.findOneAndUpdate({ _id: id }, { exams: savedExams });
+    session.exams = savedExams;
     res.status(200).json({ _id: id });
   } catch (err) {
     console.log(err.message);
