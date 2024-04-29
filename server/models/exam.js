@@ -14,6 +14,10 @@ const examSchema = new mongoose.Schema({
     // lưu đường dẫn tới file hình bài thi đã chấm
     type: String,
   },
+  session_name: {
+    type: String,
+    required: true,
+  },
 });
 
 const Exam = mongoose.model("Exam", examSchema);
