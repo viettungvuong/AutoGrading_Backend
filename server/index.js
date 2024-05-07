@@ -64,9 +64,8 @@ db.once("open", () => {
           change.fullDocument.student
         ).lean();
 
-        const fullUser = await User.findById(fullStudent.user).lean();
-
-        fullStudent.user = fullUser;
+        const fullUser = await User.findById(fullStudent.user);
+        fullStudent.user = fullUser.email;
 
         const dataToSend = {
           event: "newExam",
