@@ -24,6 +24,14 @@ mongoose.connect(process.env.MONGO_DB_URL, {
 
 const db = mongoose.connection;
 
+io.on("connection", (socket) => {
+  console.log("A client connected");
+
+  socket.on("connect", () => {
+    console.log("Client connected to server");
+  });
+});
+
 db.once("open", () => {
   console.log("Connected to MongoDB");
 
