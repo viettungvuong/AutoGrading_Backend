@@ -14,7 +14,7 @@ const StudentRoute = require("./routes/student");
 const ExamSessionRoute = require("./routes/examSession");
 const LoginRoute = require("./routes/login");
 const ClassRoute = require("./routes/schoolClass");
-
+const Student = require("./models/student");
 // Socket.io implementation
 // const { Server } = require("socket.io");
 // const io = new Server(server);
@@ -55,20 +55,32 @@ db.once("open", () => {
   const changeStream = collection.watch();
 
   // Khi co exam moi thi truyen qua WebSocket de bao
-  changeStream.on("change", (change) => {
+  changeStream.on("change", async (change) => {
     if (change.operationType === "insert") {
       console.log("New exam inserted:", change.fullDocument);
-      // Emit the new exam data to all WebSocket clients
-      wss.clients.forEach((client) => {
-        if (client.readyState === WebSocket.OPEN) {
-          client.send(
-            JSON.stringify({
-              event: "newExam",
-              exam: change.fullDocument,
-            })
-          );
-        }
-      });
+      try {
+        // Fetch full student details based on student ID
+        const fullStudent = await Student.findById(
+          change.fullDocument.student
+        ).lean();
+        // Include full student details in emitted data
+        const dataToSend = {
+          event: "newExam",
+          exam: {
+            ...change.fullDocument,
+            student: fullStudent,
+          },
+        };
+        // Convert data to JSON and send to all connected clients
+        const jsonData = JSON.stringify(dataToSend);
+        wss.clients.forEach((client) => {
+          if (client.readyState === WebSocket.OPEN) {
+            client.send(jsonData);
+          }
+        });
+      } catch (error) {
+        console.error("Error fetching student details:", error);
+      }
     }
   });
 });
