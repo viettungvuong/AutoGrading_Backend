@@ -43,7 +43,10 @@ db.once("open", () => {
   changeStream.on("change", (change) => {
     if (change.operationType === "insert") {
       console.log("New exam inserted:", change.fullDocument);
-      io.emit("newExam", change.fullDocument);
+      io.emit("newExam", {
+        event: "newExam",
+        exam: change.fullDocument,
+      });
     }
   });
 });
@@ -59,37 +62,6 @@ app.use("/session", ExamSessionRoute);
 app.use("/exam", ExamRoute);
 app.use("/student", StudentRoute);
 app.use("/class", ClassRoute);
-
-// const userSocketMap = new Map(); // dung cho socket
-// io.on("connection", (socket) => {
-//   console.log("A user connected");
-
-//   // socket de dang nhap
-//   socket.on("login", (userId) => {
-//     console.log(`User ${userId} logged in`);
-//     userSocketMap.set(userId, socket.id);
-//   });
-
-//   // Handle custom events (chat message, etc.)
-//   socket.on("exam", (data) => {
-//     const recipientStudentId = data.studentId;
-//     const recipientSocket = userSocketMap.get(recipientStudentId);
-//     if (recipientSocket) {
-//       // gui thong tin toi hoc sinh
-//       io.emit("exam", data);
-//     }
-//   });
-
-//   // ngat ket noi
-//   socket.on("disconnect", () => {
-//     userSocketMap.forEach((value, key) => {
-//       if (value === socket.id) {
-//         userSocketMap.delete(key);
-//       }
-//     });
-//     console.log("A user disconnected");
-//   });
-// });
 
 app.listen(3001, () => {
   console.log("server is running on port 3001");
