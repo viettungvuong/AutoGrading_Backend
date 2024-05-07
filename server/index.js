@@ -28,7 +28,7 @@ db.once("open", () => {
   console.log("Connected to MongoDB");
 
   // change stream, bao thay doi
-  const collection = db.collection("exams");
+  const collection = db.collection("exam");
   const changeStream = collection.watch();
 
   // khi co exam moi thi truyen qua socket de bao
