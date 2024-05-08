@@ -16,6 +16,7 @@ const LoginRoute = require("./routes/login");
 const ClassRoute = require("./routes/schoolClass");
 const Student = require("./models/student");
 const User = require("./models/user");
+const NotifyExam = require("./models/notifyExam");
 // Socket.io implementation
 // const { Server } = require("socket.io");
 // const io = new Server(server);
@@ -51,7 +52,7 @@ wss.on("connection", (ws) => {
 db.once("open", () => {
   console.log("Connected to MongoDB");
 
-  // Change stream, bao thay doi
+  // Change stream, bao thay doi tren document
   const collection = db.collection("exams");
   const changeStream = collection.watch();
 
@@ -65,19 +66,29 @@ db.once("open", () => {
         ).lean();
 
         const fullUser = await User.findById(fullStudent.user);
-        fullStudent.user = fullUser.email;
 
+        const notifyExam = new NotifyExam({
+          exam: change.fullDocument,
+          dateTime: new Date(), // new Date la lay thoi gian hien tai
+          studentEmail: fullUser.email,
+        });
+
+        try {
+          await notifyExam.save();
+          console.log("NotifyExam saved:", notifyExam);
+        } catch (error) {
+          console.error("Error saving NotifyExam:", error);
+        }
+
+        // gui qua socket
         const dataToSend = {
           event: "newExam",
-          exam: {
-            ...change.fullDocument,
-            student: fullStudent,
-          },
+          exam: notifyExam,
         };
 
         console.log(dataToSend);
 
-        // gui toi moi client
+        // gui toi moi client qua socket
         const jsonData = JSON.stringify(dataToSend);
         wss.clients.forEach((client) => {
           if (client.readyState === WebSocket.OPEN) {
