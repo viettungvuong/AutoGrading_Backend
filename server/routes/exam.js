@@ -104,6 +104,10 @@ router.get("/getImage/:examId", async (req, res) => {
 router.get("/notify/:email", async (req, res) => {
   try {
     const exams = await ExamNotify.find({ studentEmail: req.params.email });
+
+    await ExamNotify.deleteMany({ studentEmail: req.params.email }); // xoa cac noti nay ra vi da gui
+
+    res.status(200).json({ exams: copiedExams });
     res.status(200).json({ exams: exams });
   } catch (error) {}
 });
