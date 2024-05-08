@@ -8,6 +8,7 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 const ExamSession = require("../models/examSession");
+const ExamNotify = require("../models/notifyExam");
 
 const { verifyToken } = require("../controllers/auth");
 
@@ -97,6 +98,14 @@ router.get("/getImage/:examId", async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Failed to retrieve image" });
   }
+});
+
+// lay nhung exam moi cua user
+router.get("/notify/:email", async (req, res) => {
+  try {
+    const exams = await ExamNotify.find({ studentEmail: req.params.email });
+    res.status(200).json({ exams: exams });
+  } catch (error) {}
 });
 
 module.exports = router;
