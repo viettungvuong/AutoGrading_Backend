@@ -103,11 +103,13 @@ router.get("/getImage/:examId", async (req, res) => {
 // lay nhung exam moi cua user
 router.get("/notify/:email", async (req, res) => {
   try {
-    const exams = await ExamNotify.find({ studentEmail: req.params.email });
+    const notifications = await ExamNotify.find({
+      studentEmail: req.params.email,
+    });
 
     await ExamNotify.deleteMany({ studentEmail: req.params.email }); // xoa cac noti nay ra vi da gui
 
-    res.status(200).json({ exams: exams });
+    res.status(200).json({ notifications: notifications });
   } catch (error) {}
 });
 
