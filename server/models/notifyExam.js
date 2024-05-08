@@ -16,6 +16,6 @@ const notifyExamSchema = new mongoose.Schema({
   },
 });
 
-const ExamNotify = mongoose.model("ExamNotify", examSchema);
+const ExamNotify = mongoose.model("ExamNotify", notifyExamSchema);
 
 module.exports = ExamNotify;
