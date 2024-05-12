@@ -110,7 +110,10 @@ router.get("/notify/:email", async (req, res) => {
     await ExamNotify.deleteMany({ studentEmail: req.params.email }); // xoa cac noti nay ra vi da gui
 
     res.status(200).json({ notifications: notifications });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error });
+  }
 });
 
 module.exports = router;
