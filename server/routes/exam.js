@@ -94,7 +94,7 @@ router.get("/notify/:email", async (req, res) => {
 
     console.log(notifications);
 
-    // await NotifyExam.deleteMany({ studentEmail: req.params.email }); // xoa cac noti nay ra vi da gui
+    await NotifyExam.deleteMany({ studentEmail: req.params.email }); // xoa cac noti nay ra vi da gui
 
     return res.status(200).json({ notifications: notifications });
   } catch (error) {
