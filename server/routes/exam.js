@@ -8,26 +8,9 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 const ExamSession = require("../models/examSession");
-const ExamNotify = require("../models/notifyExam");
+const NotifyExam = require("../models/notifyExam");
 
 const { verifyToken } = require("../controllers/auth");
-
-// khong up le Exam len duoc ma Exam luon phu thuoc vao ExamSession
-// router.post("/", async (req, res) => {
-//   // them exam
-//   try {
-//     const { studentId, score } = req.body;
-//     const student = await Exam.findOne({ _id: studentId });
-//     if (!student) {
-//       return res.status(404).json({ error: "Student not found" });
-//     }
-//     const newExam = new Exam({ student, score });
-//     await newExam.save();
-//     res.status(201).json(newExam);
-//   } catch (error) {
-//     res.status(500).json({ error: "Failed to create new exam entry" });
-//   }
-// });
 
 router.use(verifyToken);
 
@@ -103,22 +86,20 @@ router.get("/getImage/:examId", async (req, res) => {
 // lay nhung exam moi cua user
 router.get("/notify/:email", async (req, res) => {
   try {
-    console.log(req.params.email);
-
     // const notifications = await ExamNotify.find({
     //   studentEmail: req.params.email,
     // });
 
-    const notifications = await ExamNotify.find();
+    const notifications = await NotifyExam.find();
 
     console.log(notifications);
 
-    await ExamNotify.deleteMany({ studentEmail: req.params.email }); // xoa cac noti nay ra vi da gui
+    await NotifyExam.deleteMany({ studentEmail: req.params.email }); // xoa cac noti nay ra vi da gui
 
-    res.status(200).json({ notifications: notifications });
+    return res.status(200).json({ notifications: notifications });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: error });
+    return res.status(500).json({ error: error });
   }
 });
 

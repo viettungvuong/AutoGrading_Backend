@@ -52,54 +52,55 @@ wss.on("connection", (ws) => {
 db.once("open", () => {
   console.log("Connected to MongoDB");
 
-  // // Change stream, bao thay doi tren document
-  // const collection = db.collection("exams");
-  // const changeStream = collection.watch();
+  // Change stream, bao thay doi tren document
+  const collection = db.collection("exams");
+  const changeStream = collection.watch();
 
-  // // Khi co exam moi thi truyen qua WebSocket de bao
-  // changeStream.on("change", async (change) => {
-  //   if (change.operationType === "insert") {
-  //     console.log("New exam inserted");
-  //     try {
-  //       const fullStudent = await Student.findById(
-  //         change.fullDocument.student
-  //       ).lean();
+  // Khi co exam moi thi truyen qua WebSocket de bao
+  changeStream.on("change", async (change) => {
+    if (change.operationType === "insert") {
+      console.log("New exam inserted");
+      try {
+        const fullStudent = await Student.findById(
+          change.fullDocument.student
+        ).lean();
 
-  //       const fullUser = await User.findById(fullStudent.user);
+        const fullUser = await User.findById(fullStudent.user);
 
-  //       const notifyExam = new NotifyExam({
-  //         exam: change.fullDocument,
-  //         dateTime: new Date(), // new Date la lay thoi gian hien tai
-  //         studentEmail: fullUser.email,
-  //       });
+        // them vao db
+        const notifyExam = new NotifyExam({
+          exam: change.fullDocument,
+          dateTime: new Date(), // new Date la lay thoi gian hien tai
+          studentEmail: fullUser.email,
+        });
 
-  //       try {
-  //         await notifyExam.save();
-  //         console.log("NotifyExam saved:", notifyExam);
-  //       } catch (error) {
-  //         console.error("Error saving NotifyExam:", error);
-  //       }
+        try {
+          await notifyExam.save();
+          console.log("NotifyExam saved:", notifyExam);
+        } catch (error) {
+          console.error("Error saving NotifyExam:", error);
+        }
 
-  //       // gui qua socket
-  //       const dataToSend = {
-  //         event: "newExam",
-  //         exam: notifyExam,
-  //       };
+        // gui qua socket
+        const dataToSend = {
+          event: "newExam",
+          exam: notifyExam,
+        };
 
-  //       console.log(dataToSend);
+        console.log(dataToSend);
 
-  //       // gui toi moi client qua socket
-  //       const jsonData = JSON.stringify(dataToSend);
-  //       wss.clients.forEach((client) => {
-  //         if (client.readyState === WebSocket.OPEN) {
-  //           client.send(jsonData);
-  //         }
-  //       });
-  //     } catch (error) {
-  //       console.error("Error fetching student details:", error);
-  //     }
-  //   }
-  // });
+        // gui toi moi client qua socket
+        const jsonData = JSON.stringify(dataToSend);
+        wss.clients.forEach((client) => {
+          if (client.readyState === WebSocket.OPEN) {
+            client.send(jsonData);
+          }
+        });
+      } catch (error) {
+        console.error("Error fetching student details:", error);
+      }
+    }
+  });
 });
 
 app.use(bodyParser.json()); // Middleware to interpret JSON
