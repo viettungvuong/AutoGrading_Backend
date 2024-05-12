@@ -66,12 +66,13 @@ db.once("open", () => {
           change.fullDocument.student
         ).lean();
 
-        const exam = await Exam.findById(change.fullDocument._id);
+        console.log(change.fullDocument);
+
         const fullUser = await User.findById(fullStudent.user);
 
         // them vao db
         const notifyExam = new NotifyExam({
-          exam: exam,
+          exam: change.fullDocument,
           dateTime: new Date(), // new Date la lay thoi gian hien tai
           studentEmail: fullUser.email,
         });
