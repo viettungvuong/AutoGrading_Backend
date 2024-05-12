@@ -86,7 +86,7 @@ router.get("/getImage/:examId", async (req, res) => {
 // lay nhung exam moi cua user
 router.get("/notify/:email", async (req, res) => {
   try {
-    const notifications = await ExamNotify.find({
+    const notifications = await NotifyExam.find({
       studentEmail: req.params.email,
     });
 
