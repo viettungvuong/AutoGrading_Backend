@@ -17,6 +17,7 @@ const ClassRoute = require("./routes/schoolClass");
 const Student = require("./models/student");
 const User = require("./models/user");
 const NotifyExam = require("./models/notifyExam");
+const Exam = require("./models/exam");
 // Socket.io implementation
 // const { Server } = require("socket.io");
 // const io = new Server(server);
@@ -54,7 +55,7 @@ db.once("open", () => {
 
   // Change stream, bao thay doi tren document
   const collection = db.collection("exams");
-  const changeStream = collection.watch([], { fullDocument: "updateLookup" });
+  const changeStream = collection.watch();
 
   // Khi co exam moi thi truyen qua WebSocket de bao
   changeStream.on("change", async (change) => {
@@ -65,11 +66,12 @@ db.once("open", () => {
           change.fullDocument.student
         ).lean();
 
+        const exam = await Exam.findById(change.fullDocument._id);
         const fullUser = await User.findById(fullStudent.user);
 
         // them vao db
         const notifyExam = new NotifyExam({
-          exam: change.fullDocument,
+          exam: exam,
           dateTime: new Date(), // new Date la lay thoi gian hien tai
           studentEmail: fullUser.email,
         });
