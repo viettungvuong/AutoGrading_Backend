@@ -105,9 +105,11 @@ router.get("/notify/:email", async (req, res) => {
   try {
     console.log(req.params.email);
 
-    const notifications = await ExamNotify.find({
-      studentEmail: req.params.email,
-    });
+    // const notifications = await ExamNotify.find({
+    //   studentEmail: req.params.email,
+    // });
+
+    const notifications = await ExamNotify.find();
 
     console.log(notifications);
 
