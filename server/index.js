@@ -54,7 +54,7 @@ db.once("open", () => {
 
   // Change stream, bao thay doi tren document
   const collection = db.collection("exams");
-  const changeStream = collection.watch();
+  const changeStream = collection.watch([], { fullDocument: "updateLookup" });
 
   // Khi co exam moi thi truyen qua WebSocket de bao
   changeStream.on("change", async (change) => {
