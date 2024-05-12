@@ -86,11 +86,11 @@ router.get("/getImage/:examId", async (req, res) => {
 // lay nhung exam moi cua user
 router.get("/notify/:email", async (req, res) => {
   try {
-    // const notifications = await ExamNotify.find({
-    //   studentEmail: req.params.email,
-    // });
+    const notifications = await ExamNotify.find({
+      studentEmail: req.params.email,
+    });
 
-    const notifications = await NotifyExam.find();
+    // const notifications = await NotifyExam.find();
 
     console.log(notifications);
 
