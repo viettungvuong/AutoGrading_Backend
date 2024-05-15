@@ -83,7 +83,7 @@ router.get("/getImage/:examId", async (req, res) => {
   }
 });
 
-// lay nhung exam moi cua user
+// lay nhung exam moi cua user (notification)
 router.get("/notify/:email", async (req, res) => {
   try {
     const notifications = await NotifyExam.find({
@@ -92,11 +92,22 @@ router.get("/notify/:email", async (req, res) => {
 
     // const notifications = await NotifyExam.find();
 
-    console.log(notifications);
+    // console.log(notifications);
 
-    await NotifyExam.deleteMany({ studentEmail: req.params.email }); // xoa cac noti nay ra vi da gui
+    // await NotifyExam.deleteMany({ studentEmail: req.params.email }); // xoa cac noti nay ra vi da gui
 
     return res.status(200).json({ notifications: notifications });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: error });
+  }
+});
+
+// danh dau notification da doc
+router.put("/notify/:notifyId", async (req, res) => {
+  try {
+    await ExamNotify.findByIdAndDelete(req.params.notifyId); // xoá
+    return res.status(200).send("Deleted successfully");
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: error });

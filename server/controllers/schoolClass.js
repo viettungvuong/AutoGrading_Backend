@@ -16,7 +16,7 @@ const getAllClassesOfUser = async (userEmail) => {
       { $unwind: "$user" }, // Unwind the array created by the $lookup stage
       { $match: { "user.email": userEmail } }, // match email
     ]);
-    console.log(schoolClasses);
+
     return schoolClasses;
   } catch (error) {
     console.error(error);
