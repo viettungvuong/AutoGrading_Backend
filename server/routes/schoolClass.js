@@ -9,6 +9,7 @@ const { verifyToken } = require("../controllers/auth");
 
 router.use(verifyToken);
 
+// tat ca class cua user
 router.get("/:email", async (req, res) => {
   console.log(req.params.email);
   const classes = await ClassController.getAllClassesOfUser(req.params.email);
@@ -26,16 +27,23 @@ router.get("/byId/:classId", async (req, res) => {
 
 // tao class
 router.post("/", async (req, res) => {
+  function generateRandomCode() {
+    const randomBytes = crypto.randomBytes(8);
+    const code = randomBytes.toString("hex");
+    return code;
+  }
   try {
     const { className, classId, userId } = req.body;
     const user = await User.findOne({ email: userId });
     if (!user) {
       throw "User does not exists";
     }
+
     const schoolClass = new SchoolClass({
       name: className,
       classId: classId,
       user: user,
+      code: generateRandomCode(),
     });
     await schoolClass.save();
     return res
