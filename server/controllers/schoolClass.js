@@ -58,7 +58,7 @@ const getAllClassesOfUser = async (userEmail) => {
       let student = studentAffiliateUser(userEmail);
 
       const schoolClasses = await SchoolClass.find({
-        category: { $elemMatch: { $eq: student._id } }, // tìm những lớp có lưu học sinh  này
+        students: { $elemMatch: { $eq: student._id } }, // tìm những lớp có lưu học sinh  này
       });
 
       return schoolClasses;
