@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const crypto = require("crypto");
 
 const SchoolClass = require("../models/schoolClass");
 const ClassController = require("../controllers/schoolClass");
