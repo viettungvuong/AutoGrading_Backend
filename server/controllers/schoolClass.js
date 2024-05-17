@@ -55,7 +55,7 @@ const getAllClassesOfUser = async (userEmail) => {
       ]);
       return schoolClasses;
     } else {
-      let student = studentAffiliateUser(userEmail);
+      let student = await studentAffiliateUser(userEmail);
 
       const schoolClasses = await SchoolClass.find({
         students: { $elemMatch: { $eq: student._id } }, // tìm những lớp có lưu học sinh  này
@@ -95,7 +95,7 @@ const studentsOfClass = async (classId, userEmail) => {
 };
 
 const studentJoinClass = async (code, userId, res) => {
-  let student = studentAffiliateUser(userId);
+  let student = await studentAffiliateUser(userId);
 
   const schoolClass = await SchoolClass.findOne({ code: code });
 
