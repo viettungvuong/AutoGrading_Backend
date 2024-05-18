@@ -30,16 +30,14 @@ const register = async (name, email, password, isStudent, studentId) => {
   });
 
   try {
-    await newUser.save();
-
     if (isStudent == true) {
       if (studentId == null) {
         return false;
       }
-
-      console.log(newUser._id);
-
+      await newUser.save();
       await StudentController.addStudent(name, studentId, newUser._id); // them ref cua user vao student
+    } else {
+      await newUser.save();
     }
     return true;
   } catch (err) {
