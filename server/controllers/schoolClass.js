@@ -115,9 +115,11 @@ const studentJoinClass = async (code, userId, res) => {
     { new: true }
   );
 
-  student = await Student.findById(student._id);
-  student.schoolClass.push(schoolClass._id);
-  await student.save();
+  await Student.findByIdAndUpdate(
+    student._id,
+    { $addToSet: { schoolClass: schoolClass._id } },
+    { new: true }
+  );
   return res.status(200).json({ class: schoolClass });
 };
 

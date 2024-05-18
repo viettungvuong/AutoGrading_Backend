@@ -109,7 +109,6 @@ router.put("/:id", async (req, res) => {
       var entry = exams[i]; // bai thi
 
       const { studentId, score, graded_paper_link } = entry;
-      console.log(studentId);
 
       const student = await Student.findOne({ studentId: studentId }); // tim student
       if (!student) {
@@ -117,16 +116,16 @@ router.put("/:id", async (req, res) => {
         return res.status(401).json({ error: "Student not found" });
       }
 
-      const schoolClass = await SchoolClass.findOne({ classId: classId });
-      if (!schoolClass) {
-        return res.status(401).json({ error: "School class not found" });
-      }
+      // const schoolClass = await SchoolClass.findOne({ classId: classId });
+      // if (!schoolClass) {
+      //   return res.status(401).json({ error: "School class not found" });
+      // }
 
       // luu class vao student va student vao class
-      student.schoolClass.push(schoolClass._id);
-      await student.save();
-      schoolClass.students.push(student._id);
-      await schoolClass.save();
+      // student.schoolClass.push(schoolClass._id);
+      // await student.save();
+      // schoolClass.students.push(student._id);
+      // await schoolClass.save();
 
       const newExam = new Exam({
         student: student._id,
