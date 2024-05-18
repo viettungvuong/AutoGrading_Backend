@@ -109,8 +109,11 @@ const studentJoinClass = async (code, userId, res) => {
       .json({ error: "User is already a member of this class" });
   }
 
-  schoolClass.students.push(student._id);
-  await schoolClass.save();
+  await SchoolClass.findByIdAndUpdate(
+    schoolClass._id,
+    { $addToSet: { students: student._id } },
+    { new: true }
+  );
 
   student = await Student.findById(student._id);
   student.schoolClass.push(schoolClass._id);
