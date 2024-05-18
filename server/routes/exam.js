@@ -106,7 +106,7 @@ router.get("/notify/:email", async (req, res) => {
 // danh dau notification da doc
 router.put("/notify/:notifyId", async (req, res) => {
   try {
-    await ExamNotify.findByIdAndDelete(req.params.notifyId); // xoá
+    await NotifyExam.findByIdAndDelete(req.params.notifyId); // xoá
     return res.status(200).send("Deleted successfully");
   } catch (error) {
     console.log(error);
