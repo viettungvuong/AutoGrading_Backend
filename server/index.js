@@ -60,7 +60,6 @@ db.once("open", () => {
   // Khi co exam moi thi truyen qua WebSocket de bao
   changeStream.on("change", async (change) => {
     if (change.operationType === "insert") {
-      console.log("New exam inserted");
       try {
         const fullStudent = await Student.findById(
           change.fullDocument.student
@@ -84,21 +83,21 @@ db.once("open", () => {
           console.error("Error saving NotifyExam:", error);
         }
 
-        // gui qua socket
-        const dataToSend = {
-          event: "newExam",
-          exam: notifyExam,
-        };
+        // // gui qua socket
+        // const dataToSend = {
+        //   event: "newExam",
+        //   exam: notifyExam,
+        // };
 
-        console.log(dataToSend);
+        // console.log(dataToSend);
 
-        // gui toi moi client qua socket
-        const jsonData = JSON.stringify(dataToSend);
-        wss.clients.forEach((client) => {
-          if (client.readyState === WebSocket.OPEN) {
-            client.send(jsonData);
-          }
-        });
+        // // gui toi moi client qua socket
+        // const jsonData = JSON.stringify(dataToSend);
+        // wss.clients.forEach((client) => {
+        //   if (client.readyState === WebSocket.OPEN) {
+        //     client.send(jsonData);
+        //   }
+        // });
       } catch (error) {
         console.error("Error fetching student details:", error);
       }
