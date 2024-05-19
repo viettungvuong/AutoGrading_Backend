@@ -5,7 +5,8 @@ const jwt = require("jsonwebtoken");
 
 const signIn = async (email, inputPassword) => {
   try {
-    const user = await User.findOne({ email: email.toLowerCase() });
+    const emailLower = email.toLowerCase();
+    const user = await User.findOne({ email: emailLower });
     if (!user) {
       throw "User not found";
     }
