@@ -13,6 +13,8 @@ const signIn = async (email, inputPassword) => {
     const isPasswordValid = await bcrypt.compare(inputPassword, user.password);
     if (isPasswordValid == true) {
       return user;
+    } else {
+      throw "Wrong password";
     }
   } catch (error) {
     console.error(error);
