@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 
 router.post("/signin", async (req, res) => {
   // Login
+  console.log(req.body.email);
   const login = await LoginController.signIn(req.body.email, req.body.password);
 
   if (login != null) {
