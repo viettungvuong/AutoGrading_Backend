@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 
 const signIn = async (email, inputPassword) => {
   try {
-    const user = await User.findOne({ email: email.toLowerCase() });
+    const user = await User.findOne({ email: email });
     if (!user) {
       throw "User not found";
     }
@@ -25,7 +25,7 @@ const signIn = async (email, inputPassword) => {
 const register = async (name, email, password, isStudent, studentId) => {
   const newUser = new User({
     name: name,
-    email: email.toLowerCase(),
+    email: email,
     password: password,
     isStudent: isStudent,
     studentId: studentId,
@@ -50,7 +50,7 @@ const register = async (name, email, password, isStudent, studentId) => {
 
 const emailExists = async (email) => {
   try {
-    const user = await User.findOne({ email: email.toLowerCase() });
+    const user = await User.findOne({ email: email });
     //console.log(user == null);
     if (user == null) {
       return false;
@@ -65,7 +65,7 @@ const emailExists = async (email) => {
 
 const changePassword = async (email, confirmPassword, newPassword, res) => {
   try {
-    const user = await User.findOne({ email: email.toLowerCase() });
+    const user = await User.findOne({ email: email });
     if (!user) {
       throw "User not found";
     }

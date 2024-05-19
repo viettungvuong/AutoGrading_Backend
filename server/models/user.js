@@ -27,7 +27,7 @@ userSchema.pre("save", async function (next) {
   if (!user.isModified("password")) return next();
 
   if (this.isModified("email")) {
-    this.email = this.email.toLowerCase();
+    this.email = this.email;
   }
 
   try {

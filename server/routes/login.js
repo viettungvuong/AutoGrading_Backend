@@ -10,13 +10,9 @@ router.post("/signin", async (req, res) => {
 
   if (login != null) {
     // tạo jwt token
-    const token = jwt.sign(
-      { email: req.body.email.toLowerCase() },
-      process.env.SECRET_KEY,
-      {
-        expiresIn: "1d",
-      }
-    );
+    const token = jwt.sign({ email: req.body.email }, process.env.SECRET_KEY, {
+      expiresIn: "1d",
+    });
 
     // trả token để xác thực sau này
     return res.status(200).json({ token: token, isStudent: login.isStudent });
