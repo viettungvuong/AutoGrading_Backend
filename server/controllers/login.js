@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken");
 
 const signIn = async (email, inputPassword) => {
   try {
-    console.log(email.toLowerCase());
     const user = await User.findOne({ email: email })
       .collation({ locale: "en", strength: 2 })
       .exec();
