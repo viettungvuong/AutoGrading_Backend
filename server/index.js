@@ -31,27 +31,27 @@ mongoose.connect(process.env.MONGO_DB_URL, {
 const db = mongoose.connection;
 
 // io.on("connection", (socket) => {
-//   console.log("A client connected");
+//   //console.log("A client connected");
 
 //   socket.on("connect", () => {
-//     console.log("Client connected to server");
+//     //console.log("Client connected to server");
 //   });
 // });
 
 wss.on("connection", (ws) => {
-  console.log("A client connected");
+  //console.log("A client connected");
 
   ws.on("message", (message) => {
-    console.log(`Received message: ${message}`);
+    //console.log(`Received message: ${message}`);
   });
 
   ws.on("close", () => {
-    console.log("A client disconnected");
+    //console.log("A client disconnected");
   });
 });
 
 db.once("open", () => {
-  console.log("Connected to MongoDB");
+  //console.log("Connected to MongoDB");
 
   // Change stream, bao thay doi tren document
   const collection = db.collection("exams");
@@ -65,7 +65,7 @@ db.once("open", () => {
           change.fullDocument.student
         ).lean();
 
-        console.log(change.fullDocument);
+        //console.log(change.fullDocument);
 
         const fullUser = await User.findById(fullStudent.user);
 
@@ -78,7 +78,7 @@ db.once("open", () => {
 
         try {
           await notifyExam.save();
-          console.log("NotifyExam saved:", notifyExam);
+          //console.log("NotifyExam saved:", notifyExam);
         } catch (error) {
           console.error("Error saving NotifyExam:", error);
         }
@@ -89,7 +89,7 @@ db.once("open", () => {
         //   exam: notifyExam,
         // };
 
-        // console.log(dataToSend);
+        // //console.log(dataToSend);
 
         // // gui toi moi client qua socket
         // const jsonData = JSON.stringify(dataToSend);
@@ -114,7 +114,7 @@ app.use("/student", StudentRoute);
 app.use("/class", ClassRoute);
 
 server.listen(3001, () => {
-  console.log("Server is running on port 3001");
+  //console.log("Server is running on port 3001");
 });
 
 module.exports = {

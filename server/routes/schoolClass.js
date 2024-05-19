@@ -12,7 +12,7 @@ router.use(verifyToken);
 
 // tat ca class cua user
 router.get("/:email", async (req, res) => {
-  console.log(req.params.email);
+  //console.log(req.params.email);
   const classes = await ClassController.getAllClassesOfUser(req.params.email);
   return res.json({ classes: classes }); // tra dang json
 });
@@ -51,7 +51,7 @@ router.post("/", async (req, res) => {
       .status(200)
       .json({ code: schoolClass.code, id: schoolClass._id });
   } catch (err) {
-    console.log(err.message);
+    //console.log(err.message);
     return res.status(500).json({ error: err.message });
   }
 });
@@ -63,7 +63,7 @@ router.post("/join", async (req, res) => {
 
     await ClassController.studentJoinClass(code, userId, res);
   } catch (err) {
-    console.log(err.message);
+    //console.log(err.message);
     return res.status(500).send(err.message);
   }
 });

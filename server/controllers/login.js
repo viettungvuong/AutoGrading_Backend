@@ -41,7 +41,7 @@ const register = async (name, email, password, isStudent, studentId) => {
     }
     return true;
   } catch (err) {
-    console.log(err.message);
+    //console.log(err.message);
     return false;
   }
 };
@@ -49,7 +49,7 @@ const register = async (name, email, password, isStudent, studentId) => {
 const emailExists = async (email) => {
   try {
     const user = await User.findOne({ email: email.toLowerCase() });
-    console.log(user == null);
+    //console.log(user == null);
     if (user == null) {
       return false;
     } else {

@@ -56,7 +56,7 @@ router.post("/signup", async (req, res) => {
     isStudent,
     studentId
   );
-  console.log(register);
+  //console.log(register);
 
   if (register == true) {
     const token = jwt.sign({ email: req.body.email }, process.env.SECRET_KEY, {

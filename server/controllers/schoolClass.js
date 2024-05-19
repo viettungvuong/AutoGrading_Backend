@@ -82,12 +82,12 @@ const studentsOfClass = async (classId, userEmail) => {
     const res = [];
     for (const student of schoolClass.students) {
       const findStudent = await Student.findById(student._id);
-      console.log(findStudent);
+      //console.log(findStudent);
       if (findStudent) {
         res.push(findStudent);
       }
     }
-    console.log(res);
+    //console.log(res);
     return res;
   } catch (err) {
     return null;

@@ -37,7 +37,7 @@ router.get("/:email", async (req, res) => {
         studentNames.add({ name: student.name, studentId: student.studentId });
       }
     }
-    console.log(studentNames);
+    //console.log(studentNames);
     return res.status(200).json({ students: [...studentNames] });
   } catch (err) {
     return res.status(500).send(err);
@@ -87,7 +87,7 @@ router.post("/", async (req, res) => {
     // });
     // await student.save();
     let student = await Student.findOne({ studentId: studentId });
-    console.log(student);
+    //console.log(student);
     if (!student) {
       await StudentController.addStudent(name, studentId);
     } else {
@@ -104,7 +104,7 @@ router.post("/", async (req, res) => {
 
     res.status(200).json({ id: student._id }); // tra ve id
   } catch (err) {
-    console.log(err.message);
+    //console.log(err.message);
     res.status(500).json({ error: err.message });
   }
 });

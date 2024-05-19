@@ -33,7 +33,7 @@ router.get("/byId/:id", async (req, res) => {
     const exam = await Exam.findById(req.params.id).populate("student");
     res.status(200).json(exam);
   } catch (error) {
-    console.log(error.message);
+    //console.log(error.message);
     res.status(500).json({ error: error.message });
   }
 });
@@ -92,13 +92,13 @@ router.get("/notify/:email", async (req, res) => {
 
     // const notifications = await NotifyExam.find();
 
-    // console.log(notifications);
+    // //console.log(notifications);
 
     // await NotifyExam.deleteMany({ studentEmail: req.params.email }); // xoa cac noti nay ra vi da gui
 
     return res.status(200).json({ notifications: notifications });
   } catch (error) {
-    console.log(error);
+    //console.log(error);
     return res.status(500).json({ error: error });
   }
 });
@@ -109,7 +109,7 @@ router.put("/notify/:notifyId", async (req, res) => {
     await NotifyExam.findByIdAndDelete(req.params.notifyId); // xoá
     return res.status(200).send("Deleted successfully");
   } catch (error) {
-    console.log(error);
+    //console.log(error);
     return res.status(500).json({ error: error });
   }
 });

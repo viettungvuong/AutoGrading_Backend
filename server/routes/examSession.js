@@ -13,7 +13,7 @@ const { verifyToken } = require("../controllers/auth");
 router.use(verifyToken);
 
 router.get("/:email", async (req, res) => {
-  console.log(req.params.email);
+  //console.log(req.params.email);
   const sessions = await ExamSessionController.getAllSessionsOfUser(
     req.params.email
   );
@@ -79,7 +79,7 @@ router.post("/", async (req, res) => {
 
     res.status(200).json({ _id: savedExamSession._id });
   } catch (err) {
-    console.log(err.message);
+    //console.log(err.message);
     res.status(500).json({ error: err.message });
   }
 });
@@ -112,7 +112,7 @@ router.put("/:id", async (req, res) => {
 
       const student = await Student.findOne({ studentId: studentId }); // tim student
       if (!student) {
-        console.log("Student not found");
+        //console.log("Student not found");
         return res.status(401).json({ error: "Student not found" });
       }
 
@@ -148,7 +148,7 @@ router.put("/:id", async (req, res) => {
 
     res.status(200).json({ _id: id });
   } catch (err) {
-    console.log(err.message);
+    //console.log(err.message);
     res.status(500).json({ error: err.message });
   }
 });
