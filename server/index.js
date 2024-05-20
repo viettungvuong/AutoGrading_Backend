@@ -65,22 +65,26 @@ db.once("open", () => {
           change.fullDocument.student
         ).lean();
 
-        //console.log(change.fullDocument);
-
         const fullUser = await User.findById(fullStudent.user);
 
-        // them vao db
-        const notifyExam = new NotifyExam({
+        const existingNotifyExam = await NotifyExam.findOne({
           exam: change.fullDocument,
-          dateTime: new Date(), // new Date la lay thoi gian hien tai
-          studentEmail: fullUser.email,
         });
 
-        try {
-          await notifyExam.save();
-          //console.log("NotifyExam saved:", notifyExam);
-        } catch (error) {
-          console.error("Error saving NotifyExam:", error);
+        if (existingNotifyExam == null) {
+          // them vao db
+          const notifyExam = new NotifyExam({
+            exam: change.fullDocument,
+            dateTime: new Date(), // new Date la lay thoi gian hien tai
+            studentEmail: fullUser.email,
+          });
+
+          try {
+            await notifyExam.save();
+            //console.log("NotifyExam saved:", notifyExam);
+          } catch (error) {
+            console.error("Error saving NotifyExam:", error);
+          }
         }
 
         // // gui qua socket
