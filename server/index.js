@@ -72,6 +72,7 @@ db.once("open", () => {
         });
 
         if (existingNotifyExam == null) {
+          // đảm bảo không bị trùng notifyExam
           // them vao db
           const notifyExam = new NotifyExam({
             exam: change.fullDocument,
